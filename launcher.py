@@ -19,8 +19,6 @@ def resource_path(relative_path):
         base_path = os.path.dirname(__file__)
     return os.path.join(base_path, relative_path)
 
-icon_path = resource_path('icon.ico'
-
 class GameLauncher:
     def __init__(self, root):
         self.root = root
@@ -28,13 +26,12 @@ class GameLauncher:
         self.root.geometry("850x600")
         self.root.resizable(False, False)
 
-        icon_path = os.path.join(os.path.dirname(__file__), 'icon.ico')
+        icon_path = resource_path('icon.ico')
         self.root.iconbitmap(icon_path)
-
 
         pygame.mixer.init()
         self.muted = False
-        self.play_music("mw.mp3")
+        self.play_music(resource_path("mw.mp3"))
 
         self.overlay_frame = tk.Frame(root, bg="#000000", bd=5)
         self.overlay_frame.place(relwidth=1, relheight=1)
@@ -48,19 +45,19 @@ class GameLauncher:
         self.cw_button = tk.Button(self.sidebar, text="Black Ops Cold War", command=self.show_cw_launcher, bg="#000", fg="white", font=("Impact", 16), height=2)
         self.cw_button.pack(pady=10)
 
-        self.mute_img = Image.open("mute.png")
+        self.mute_img = Image.open(resource_path("mute.png"))
         self.mute_img = self.mute_img.resize((50, 50), Image.Resampling.LANCZOS)
         self.mute_photo = ImageTk.PhotoImage(self.mute_img)
         self.mute_button = tk.Button(self.sidebar, image=self.mute_photo, command=self.toggle_mute, bg="#333", bd=0)
         self.mute_button.pack(pady=10)
 
-        self.git_img = Image.open("git.png")
+        self.git_img = Image.open(resource_path("git.png"))
         self.git_img = self.git_img.resize((50, 50), Image.Resampling.LANCZOS)
         self.git_photo = ImageTk.PhotoImage(self.git_img)
         self.git_button = tk.Button(self.sidebar, image=self.git_photo, command=self.open_github, bg="#333", bd=0)
         self.git_button.pack(pady=10)
 
-        self.discord_img = Image.open("discord.png")
+        self.discord_img = Image.open(resource_path("discord.png"))
         self.discord_img = self.discord_img.resize((50, 50), Image.Resampling.LANCZOS)
         self.discord_photo = ImageTk.PhotoImage(self.discord_img)
         self.discord_button = tk.Button(self.sidebar, image=self.discord_photo, command=self.open_discord, bg="#333", bd=0)
@@ -75,8 +72,8 @@ class GameLauncher:
         self.video_label = tk.Label(self.main_frame)
         self.video_label.place(x=0, y=0, relwidth=1, relheight=1)
 
-        self.mw_video_path = os.path.join(os.path.dirname(__file__), "mw.mp4")
-        self.cw_video_path = os.path.join(os.path.dirname(__file__), "cw.mp4")
+        self.mw_video_path = resource_path("mw.mp4")
+        self.cw_video_path = resource_path("cw.mp4")
 
         self.mw_cap = None
         self.cw_cap = None
@@ -99,7 +96,7 @@ class GameLauncher:
             self.cw_cap.release()
 
         self.play_video(self.mw_video_path, 'mw')
-        self.play_music("mw.mp3")
+        self.play_music(resource_path("mw.mp3"))
 
         if self.launch_button:
             self.launch_button.destroy()
@@ -122,7 +119,7 @@ class GameLauncher:
             self.mw_cap.release()
 
         self.play_video(self.cw_video_path, 'cw')
-        self.play_music("cw.mp3")
+        self.play_music(resource_path("cw.mp3"))
 
         if self.launch_button:
             self.launch_button.destroy()
