@@ -94,9 +94,6 @@ class GameLauncher:
 
         self.initialize_rpc()
         self.show_mw_launcher()
-
-        self.check_game_thread = threading.Thread(target=self.check_game_status, daemon=True)
-        self.check_game_thread.start()
         
     def is_game_running(self, process_name):
         for proc in psutil.process_iter(['pid', 'name']):
