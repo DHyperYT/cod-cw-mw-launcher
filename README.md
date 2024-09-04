@@ -5,3 +5,8 @@ Launcher made in Python designed to launch *special* versions of Black Ops Cold 
 Donetsk server: https://discord.gg/donetsk-1045458566636650568
 
 # PULL REQUESTS ARE ENCOURAGED
+
+# PLANS
+
+- Show current campaign mission for each save in the Cold War menu.
+- Maybe add a screen that shows your loadouts in MW and CW?
