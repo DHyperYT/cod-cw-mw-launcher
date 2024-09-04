@@ -86,17 +86,25 @@ class GameLauncher:
         self.show_mw_launcher()
 
     def initialize_rpc(self):
-        self.rpc = pypresence.Presence(client_id='779362523388313612')
-        self.rpc.connect()
-        self.update_rpc("Idle", "In the Modern Warfare Menu", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
+        if any(proc.name() == "Discord.exe" for proc in psutil.process_iter()):
+            try:
+                self.rpc = pypresence.Presence(client_id='779362523388313612')
+                self.rpc.connect()
+                self.update_rpc("Idle", "In the Modern Warfare Menu", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
+            except Exception as e:
+                print(f"Failed to initialize RPC: {e}")
 
     def update_rpc(self, state, details, button_label, button_url):
-        self.rpc.update(
-            state=state,
-            details=details,
-            large_image="icon",
-            buttons=[{"label": button_label, "url": button_url}]
-        )
+        if self.rpc:
+            try:
+                self.rpc.update(
+                    state=state,
+                    details=details,
+                    large_image="icon",
+                    buttons=[{"label": button_label, "url": button_url}]
+                )
+            except Exception as e:
+                print(f"Failed to update RPC: {e}")
 
     def play_music(self, music_file):
         pygame.mixer.music.load(music_file)
