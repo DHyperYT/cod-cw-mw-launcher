@@ -11,6 +11,7 @@ import psutil
 import webbrowser
 import urllib.request
 import sys
+import pypresence
 
 def resource_path(relative_path):
     try:
@@ -81,7 +82,21 @@ class GameLauncher:
         self.launch_button = None
         self.dll_button = None
 
+        self.initialize_rpc()
         self.show_mw_launcher()
+
+    def initialize_rpc(self):
+        self.rpc = pypresence.Presence(client_id='779362523388313612')
+        self.rpc.connect()
+        self.update_rpc("Idle", "In the Modern Warfare Menu", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
+
+    def update_rpc(self, state, details, button_label, button_url):
+        self.rpc.update(
+            state=state,
+            details=details,
+            large_image="icon",
+            buttons=[{"label": button_label, "url": button_url}]
+        )
 
     def play_music(self, music_file):
         pygame.mixer.music.load(music_file)
@@ -110,6 +125,8 @@ class GameLauncher:
         self.dll_button = tk.Button(self.main_frame, text="Download DLL", command=self.download_mw_dll, bg="#FF4500", fg="white", font=("Arial", 12))
         self.dll_button.place(relx=1.0, rely=1.0, anchor="se", x=-20, y=-20)
 
+        self.update_rpc("Idle", "In the Modern Warfare Menu", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
+
     def show_cw_launcher(self):
         if self.current_launcher == 'cw':
             return
@@ -132,6 +149,8 @@ class GameLauncher:
 
         self.dll_button = tk.Button(self.main_frame, text="Download DLL", command=self.download_cw_dll, bg="#FF4500", fg="white", font=("Arial", 12))
         self.dll_button.place(relx=1.0, rely=1.0, anchor="se", x=-20, y=-20)
+
+        self.update_rpc("Idle", "In the Black Ops Cold War Menu", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
 
     def play_video(self, video_path, launcher_type):
         if launcher_type == 'mw':
@@ -198,8 +217,10 @@ class GameLauncher:
             if os.path.exists(exe_path):
                 self.toggle_mute()
                 subprocess.Popen(exe_path, cwd=game_path)
+                self.update_rpc("Playing", "Modern Warfare", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
                 self.wait_for_process_termination("game_dx12_ship_replay.exe")
                 self.toggle_mute()
+                self.update_rpc("Idle", "In the Modern Warfare menu", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
             else:
                 download = messagebox.askyesno("Executable Not Found", "Game not found in the selected path. Do you want to download it?")
                 if download:
@@ -214,8 +235,10 @@ class GameLauncher:
             if os.path.exists(exe_path):
                 self.toggle_mute()
                 subprocess.Popen(exe_path, cwd=game_path)
+                self.update_rpc("Playing", "Black Ops Cold War", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
                 self.wait_for_process_termination("BlackOpsColdWar.exe")
                 self.toggle_mute()
+                self.update_rpc("Idle", "In the Black Ops Cold War menu", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
             else:
                 download = messagebox.askyesno("Executable Not Found", "Game not found in the selected path. Do you want to download it?")
                 if download:
@@ -237,7 +260,7 @@ class GameLauncher:
     def download_mw_dll(self):
         game_path = self.load_game_path()
         if game_path:
-            dll_url = "https://donetsk.lilpoop.xyz/mw19/discord_game_sdk.dll"
+            dll_url = "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/discord_game_sdk%20(1).dll"
             dll_path = os.path.join(game_path, "discord_game_sdk.dll")
             urllib.request.urlretrieve(dll_url, dll_path)
             messagebox.showinfo("DLL Downloaded", "DLL installed successfully.")
