@@ -8,5 +8,5 @@ Donetsk server: https://discord.gg/donetsk-1045458566636650568
 
 # PLANS
 
-- Show current campaign mission for each save in the Cold War menu.
+- ~~Show current campaign mission for each save in the Cold War menu.~~ DONE
 - Maybe add a screen that shows your loadouts in MW and CW?
