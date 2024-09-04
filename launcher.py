@@ -247,7 +247,7 @@ class GameLauncher:
     def download_cw_dll(self):
         game_path = self.load_game_path()
         if game_path:
-            dll_url = "https://donetsk.lilpoop.xyz/bocw/discord_game_sdk.dll"
+            dll_url = "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/discord_game_sdk.dll"
             dll_path = os.path.join(game_path, "discord_game_sdk.dll")
             urllib.request.urlretrieve(dll_url, dll_path)
             messagebox.showinfo("DLL Downloaded", "DLL installed successfully.")
