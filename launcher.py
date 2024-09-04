@@ -10,6 +10,16 @@ import time
 import psutil
 import webbrowser
 import urllib.request
+import sys
+
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.dirname(__file__)
+    return os.path.join(base_path, relative_path)
+
+icon_path = resource_path('icon.ico'
 
 class GameLauncher:
     def __init__(self, root):
@@ -248,7 +258,7 @@ class GameLauncher:
             messagebox.showerror("Error", "Game path not set. Please set the game path in Settings.")
 
     def open_github(self):
-        webbrowser.open("https://github.com/DHyperYT/wip")
+        webbrowser.open("https://github.com/DHyperYT/cod-cw-mw-launcher/")
 
     def open_discord(self):
         webbrowser.open("https://discord.gg/CCZhqg6RfX")
