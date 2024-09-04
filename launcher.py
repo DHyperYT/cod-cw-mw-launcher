@@ -40,32 +40,35 @@ class GameLauncher:
         self.sidebar = tk.Frame(self.overlay_frame, width=300, bg="#333", height=600, relief="raised", borderwidth=2)
         self.sidebar.pack(side="left", fill="y")
 
+        self.button_frame = tk.Frame(self.sidebar, bg="#333")
+        self.button_frame.pack(pady=10)
+
+        self.mute_img = Image.open(resource_path("mute.png"))
+        self.mute_img = self.mute_img.resize((50, 50), Image.Resampling.LANCZOS)
+        self.mute_photo = ImageTk.PhotoImage(self.mute_img)
+        self.mute_button = tk.Button(self.button_frame, image=self.mute_photo, command=self.toggle_mute, bg="#333", bd=0)
+        self.mute_button.pack(side="left", padx=5)
+
+        self.git_img = Image.open(resource_path("git.png"))
+        self.git_img = self.git_img.resize((50, 50), Image.Resampling.LANCZOS)
+        self.git_photo = ImageTk.PhotoImage(self.git_img)
+        self.git_button = tk.Button(self.button_frame, image=self.git_photo, command=self.open_github, bg="#333", bd=0)
+        self.git_button.pack(side="left", padx=5)
+
+        self.discord_img = Image.open(resource_path("discord.png"))
+        self.discord_img = self.discord_img.resize((50, 50), Image.Resampling.LANCZOS)
+        self.discord_photo = ImageTk.PhotoImage(self.discord_img)
+        self.discord_button = tk.Button(self.button_frame, image=self.discord_photo, command=self.open_discord, bg="#333", bd=0)
+        self.discord_button.pack(side="left", padx=5)
+
+        self.settings_button = tk.Button(self.sidebar, text="Settings", command=self.open_settings, bg="#000", fg="white", font=("Impact", 16), height=2)
+        self.settings_button.pack(side="bottom", fill="x", pady=10)
+
         self.mw_button = tk.Button(self.sidebar, text="   Modern Warfare   ", command=self.show_mw_launcher, bg="#000", fg="white", font=("Impact", 16), height=2)
         self.mw_button.pack(pady=10)
 
         self.cw_button = tk.Button(self.sidebar, text="Black Ops Cold War", command=self.show_cw_launcher, bg="#000", fg="white", font=("Impact", 16), height=2)
         self.cw_button.pack(pady=10)
-
-        self.mute_img = Image.open(resource_path("mute.png"))
-        self.mute_img = self.mute_img.resize((50, 50), Image.Resampling.LANCZOS)
-        self.mute_photo = ImageTk.PhotoImage(self.mute_img)
-        self.mute_button = tk.Button(self.sidebar, image=self.mute_photo, command=self.toggle_mute, bg="#333", bd=0)
-        self.mute_button.pack(pady=10)
-
-        self.git_img = Image.open(resource_path("git.png"))
-        self.git_img = self.git_img.resize((50, 50), Image.Resampling.LANCZOS)
-        self.git_photo = ImageTk.PhotoImage(self.git_img)
-        self.git_button = tk.Button(self.sidebar, image=self.git_photo, command=self.open_github, bg="#333", bd=0)
-        self.git_button.pack(pady=10)
-
-        self.discord_img = Image.open(resource_path("discord.png"))
-        self.discord_img = self.discord_img.resize((50, 50), Image.Resampling.LANCZOS)
-        self.discord_photo = ImageTk.PhotoImage(self.discord_img)
-        self.discord_button = tk.Button(self.sidebar, image=self.discord_photo, command=self.open_discord, bg="#333", bd=0)
-        self.discord_button.pack(pady=10)
-
-        self.settings_button = tk.Button(self.sidebar, text="Settings", command=self.open_settings, bg="#000", fg="white", font=("Impact", 16), height=2)
-        self.settings_button.pack(side="bottom", fill="x", pady=10)
 
         self.main_frame = tk.Frame(self.overlay_frame, width=700, height=600, bg="#000000")
         self.main_frame.pack(side="right", fill="both", expand=True)
@@ -82,8 +85,24 @@ class GameLauncher:
         self.launch_button = None
         self.dll_button = None
 
+        self.current_mission_label = tk.Label(self.main_frame, text="Current Campaign Missions", bg="#000", fg="white", font=("Arial", 12))
+        self.save1_label = tk.Label(self.main_frame, text="", bg="#000", fg="white", font=("Arial", 12))
+        self.save2_label = tk.Label(self.main_frame, text="", bg="#000", fg="white", font=("Arial", 12))
+        self.save3_label = tk.Label(self.main_frame, text="", bg="#000", fg="white", font=("Arial", 12))
+
+        self.hide_mission_labels()
+
         self.initialize_rpc()
         self.show_mw_launcher()
+
+        self.check_game_thread = threading.Thread(target=self.check_game_status, daemon=True)
+        self.check_game_thread.start()
+        
+    def is_game_running(self, process_name):
+        for proc in psutil.process_iter(['pid', 'name']):
+            if proc.info['name'] == process_name:
+                return True
+        return False
 
     def initialize_rpc(self):
         if any(proc.name() == "Discord.exe" for proc in psutil.process_iter()):
@@ -133,6 +152,8 @@ class GameLauncher:
         self.dll_button = tk.Button(self.main_frame, text="Download DLL", command=self.download_mw_dll, bg="#FF4500", fg="white", font=("Arial", 12))
         self.dll_button.place(relx=1.0, rely=1.0, anchor="se", x=-20, y=-20)
 
+        self.hide_mission_labels()
+
         self.update_rpc("Idle", "In the Modern Warfare Menu", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
 
     def show_cw_launcher(self):
@@ -158,7 +179,68 @@ class GameLauncher:
         self.dll_button = tk.Button(self.main_frame, text="Download DLL", command=self.download_cw_dll, bg="#FF4500", fg="white", font=("Arial", 12))
         self.dll_button.place(relx=1.0, rely=1.0, anchor="se", x=-20, y=-20)
 
+        self.update_mission_display()
+        self.show_mission_labels()
+
         self.update_rpc("Idle", "In the Black Ops Cold War Menu", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
+
+    def hide_mission_labels(self):
+        self.current_mission_label.place_forget()
+        self.save1_label.place_forget()
+        self.save2_label.place_forget()
+        self.save3_label.place_forget()
+
+    def show_mission_labels(self):
+        self.current_mission_label.place(x=10, y=460)
+        self.save1_label.place(x=10, y=485)
+        self.save2_label.place(x=10, y=510)
+        self.save3_label.place(x=10, y=535)
+
+    def update_mission_display(self):
+        self.mission_map = {
+            'cp_rus_amerika': 'Redlight, Greenlight',
+            'cp_rus_yamantau': 'Echoes of a Cold War',
+            'cp_ger_hub_post_yamantau': 'Safehouse: Lubyanka Briefing',
+            'cp_rus_kgb': 'Desperate Measures',
+            'cp_takedown': 'Nowhere Left to Run',
+            'cp_ger_hub': 'CIA Safehouse E9',
+            'cp_nam_armada': 'Fracture Jaw',
+            'cp_ger_hub_post_armada': 'Safehouse: East Berlin Briefing',
+            'cp_ger_stakeout': 'Brick in the Wall',
+            'cp_sidemission_takedown': 'Operation Chaos',
+            'cp_sidemission_tundra': 'Operation Red Circus',
+            'cp_ger_hub_post_kgb': 'Safehouse: Cuba Briefing',
+            'cp_nic_revolucion': 'End of the Line',
+            'cp_ger_hub_post_cuba': 'Interrogation',
+            'cp_nam_prisoner': 'Break on Through',
+            'cp_ger_hub8': 'Identity Crisis',
+            'cp_rus_siege': 'The Final Countdown',
+            'cp_rus_duga': 'Ashes to Ashes',
+        }
+
+        save1_mission = self.get_mission_from_save_file('cp_savegame.cgp')
+        save2_mission = self.get_mission_from_save_file('cp_savegame_1.cgp')
+        save3_mission = self.get_mission_from_save_file('cp_savegame_2.cgp')
+
+        self.save1_label.config(text=f"Save 1: {save1_mission}")
+        self.save2_label.config(text=f"Save 2: {save2_mission}")
+        self.save3_label.config(text=f"Save 3: {save3_mission}")
+
+    def get_mission_from_save_file(self, save_file):
+        save_directory = os.path.join(os.getenv('USERPROFILE'), 'Documents', 'Call Of Duty Black Ops Cold War', 'player')
+        save_file_path = os.path.join(save_directory, save_file)
+
+        try:
+            with open(save_file_path, 'rb') as file:
+                first_line = file.readline().decode('utf-8', errors='ignore')
+
+                for mission_id in self.mission_map:
+                    if mission_id in first_line:
+                        return self.mission_map[mission_id]
+
+            return "No active mission"
+        except Exception as e:
+            return "Error"
 
     def play_video(self, video_path, launcher_type):
         if launcher_type == 'mw':
@@ -247,6 +329,7 @@ class GameLauncher:
                 self.wait_for_process_termination("BlackOpsColdWar.exe")
                 self.toggle_mute()
                 self.update_rpc("Idle", "In the Black Ops Cold War menu", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
+                self.update_mission_display()
             else:
                 download = messagebox.askyesno("Executable Not Found", "Game not found in the selected path. Do you want to download it?")
                 if download:
