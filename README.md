@@ -3,7 +3,6 @@ Launcher made in Python designed to launch *special* versions of Black Ops Cold 
 
 # Usage
 
-**MAKE SURE DISCORD IS RUNNING! WILL FIX IN FUTURE UPDATE**
 1. Click and select the directory where your game is installed.
 2. Choose between Modern Warfare or Black Ops Cold War and click 'Launch'.
 3. Use the 'Download DLL' buttons to install better discord_game_sdk.dll files to the games.
