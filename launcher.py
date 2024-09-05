@@ -23,6 +23,7 @@ def resource_path(relative_path):
 class GameLauncher:
     def __init__(self, root):
         self.root = root
+        self.rpc = None
         self.root.title("Call of Duty Launcher")
         self.root.geometry("850x600")
         self.root.resizable(False, False)
@@ -109,6 +110,9 @@ class GameLauncher:
                 self.update_rpc("Idle", "In the Modern Warfare Menu", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
             except Exception as e:
                 print(f"Failed to initialize RPC: {e}")
+        else:
+            print("Discord is not running. Skipping RPC initialization.")
+            self.rpc = None
 
     def update_rpc(self, state, details, button_label, button_url):
         if self.rpc:
@@ -121,6 +125,8 @@ class GameLauncher:
                 )
             except Exception as e:
                 print(f"Failed to update RPC: {e}")
+        else:
+            print("RPC not initialized, skipping update.")
 
     def play_music(self, music_file):
         pygame.mixer.music.load(music_file)
