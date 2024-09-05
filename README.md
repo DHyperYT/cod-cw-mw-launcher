@@ -15,6 +15,7 @@ Launcher made in Python designed to launch *special* versions of Black Ops Cold 
 - Download DLL buttons to install the best (in my opinion) discord_game_sdk.dll to your game files
 - Plays the respective game's main theme in the background, and can be muted
 - Launcher freezes when you launch a game so it won't use cpu power until you finish playing
+- manage your mw operators within the launcher
 
 # Credits
 Donetsk server: https://discord.gg/donetsk-1045458566636650568
@@ -26,6 +27,6 @@ Pull requests are welcome
 
 - ~~Show current campaign mission for each save in the Cold War menu.~~ DONE
 - Maybe add a screen that shows your loadouts in MW and CW?
-- Modern Warfare Operator manager menu?
+- ~~Modern Warfare Operator manager menu?~~ DONE
 - Redesign this shi
 - Loadout editor within the launcher for Modern Warfare
