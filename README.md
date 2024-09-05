@@ -15,7 +15,7 @@ Launcher made in Python designed to launch *special* versions of Black Ops Cold 
 - Download DLL buttons to install the best (in my opinion) discord_game_sdk.dll to your game files
 - Plays the respective game's main theme in the background, and can be muted
 - Launcher freezes when you launch a game so it won't use cpu power until you finish playing
-- manage your mw operators within the launcher (will only apply on first launch until inventory.json is deleted)
+- manage your default mw operators within the launcher (will only apply on first launch until inventory.json is deleted or when you change the dll)
 
 # Credits
 Donetsk server: https://discord.gg/donetsk-1045458566636650568
