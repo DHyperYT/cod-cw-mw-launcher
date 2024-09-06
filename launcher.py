@@ -493,13 +493,13 @@ class GameLauncher:
         self.button_frame.pack(pady=10)
 
         self.mw_img = Image.open(resource_path("mw.png"))
-        self.mw_img = self.mw_img.resize((50, 50), Image.Resampling.LANCZOS)
+        self.mw_img = self.mw_img.resize((60, 60), Image.Resampling.LANCZOS)
         self.mw_photo = ImageTk.PhotoImage(self.mw_img)
         self.mw_button = tk.Button(self.button_frame, image=self.mw_photo, command=self.show_mw_launcher, bg="#000", bd=0)
         self.mw_button.pack(pady=10)
 
         self.cw_img = Image.open(resource_path("cw.png"))
-        self.cw_img = self.cw_img.resize((50, 50), Image.Resampling.LANCZOS)
+        self.cw_img = self.cw_img.resize((60, 60), Image.Resampling.LANCZOS)
         self.cw_photo = ImageTk.PhotoImage(self.cw_img)
         self.cw_button = tk.Button(self.button_frame, image=self.cw_photo, command=self.show_cw_launcher, bg="#000", bd=0)
         self.cw_button.pack(pady=10)
