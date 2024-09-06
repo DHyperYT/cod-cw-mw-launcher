@@ -788,11 +788,13 @@ class GameLauncher:
         if game_path:
             exe_path = os.path.join(game_path, "game_dx12_ship_replay.exe")
             if os.path.exists(exe_path):
+                self.pause_music()
                 self.toggle_mute()
                 subprocess.Popen(exe_path, cwd=game_path)
                 self.update_rpc("Playing", "Modern Warfare", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
                 self.wait_for_process_termination("game_dx12_ship_replay.exe")
                 self.toggle_mute()
+                self.resume_music() 
                 self.update_rpc("Idle", "In the Modern Warfare menu", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
             else:
                 download = messagebox.askyesno("Executable Not Found", "Game not found in the selected path. Do you want to download it?")
@@ -806,12 +808,13 @@ class GameLauncher:
         if game_path:
             exe_path = os.path.join(game_path, "BlackOpsColdWar.exe")
             if os.path.exists(exe_path):
-                self.toggle_mute()
+                self.pause_music() 
+                self.toggle_mute()  
                 subprocess.Popen(exe_path, cwd=game_path)
                 self.update_rpc("Playing", "Black Ops Cold War", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
                 self.wait_for_process_termination("BlackOpsColdWar.exe")
-                self.toggle_mute()
-                self.update_rpc("Idle", "In the Black Ops Cold War menu", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
+                self.toggle_mute() 
+                self.resume_music() 
                 self.update_mission_display()
             else:
                 download = messagebox.askyesno("Executable Not Found", "Game not found in the selected path. Do you want to download it?")
@@ -819,7 +822,7 @@ class GameLauncher:
                     webbrowser.open("https://gofile.io/d/s9r66f")
         else:
             messagebox.showerror("Error", "Game path not set. Please set the game path in Settings.")
-
+            
     def toggle_mute(self):
         if self.muted:
             pygame.mixer.music.unpause()
@@ -830,6 +833,14 @@ class GameLauncher:
     def wait_for_process_termination(self, process_name):
         while any(proc.name() == process_name for proc in psutil.process_iter()):
             time.sleep(1)
+
+    def pause_music(self):
+        if not self.muted:
+            pygame.mixer.music.pause()
+
+    def resume_music(self):
+        if not self.muted:
+            pygame.mixer.music.unpause()
 
     def download_mw_dll(self):
         game_path = self.load_game_path()
