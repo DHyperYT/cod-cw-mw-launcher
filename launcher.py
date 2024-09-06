@@ -190,6 +190,7 @@ class OperatorEditor:
     def __init__(self, root):
         self.root = root
         self.root.title("Operator Editor")
+        self.root.resizable(False, False)
 
         icon_path = resource_path('icon.ico')
         self.root.iconbitmap(icon_path)
