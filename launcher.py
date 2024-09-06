@@ -858,16 +858,16 @@ class GameLauncher:
         webbrowser.open("https://discord.gg/CCZhqg6RfX")
 
     def delete_inventory_file(self):
-        file_path = os.path.join(os.getenv('USERPROFILE'), 'Documents', 'Call of Duty Modern Warfare', 'players', 'inventory.cfg')
+        file_path = os.path.join(os.getenv('USERPROFILE'), 'Documents', 'Call of Duty Modern Warfare', 'players', 'inventory.json')
         
         try:
             if os.path.exists(file_path):
                 os.remove(file_path)
-                messagebox.showinfo("File Deleted", "inventory.cfg has been deleted.")
+                messagebox.showinfo("File Deleted", "inventory.json has been deleted.")
             else:
-                messagebox.showwarning("File Not Found", "inventory.cfg does not exist.")
+                messagebox.showwarning("File Not Found", "inventory.json does not exist.")
         except Exception:
-            messagebox.showerror("Deletion Error", f"Failed to delete inventory.cfg.")
+            messagebox.showerror("Deletion Error", f"Failed to delete inventory.json.")
     
     def download_config_files(self):
         urls = {
