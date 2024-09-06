@@ -718,10 +718,12 @@ class GameLauncher:
             return "Error"
 
     def open_loadout_editor(self):
+        self.update_rpc("Editing Operators", "In the Modern Warfare Menu", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
         editor_window = tk.Toplevel(self.root)
         OperatorEditor(editor_window)
 
     def open_weapon_editor(self):
+        self.update_rpc("Editing Weapons", "In the Modern Warfare Menu", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
         editor_window = tk.Toplevel(self.root)
         LoadoutEditor(editor_window)
 
@@ -795,7 +797,7 @@ class GameLauncher:
                 self.wait_for_process_termination("game_dx12_ship_replay.exe")
                 self.toggle_mute()
                 self.resume_music() 
-                self.update_rpc("Idle", "In the Modern Warfare menu", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
+                self.update_rpc("Just finished playing", "In the Modern Warfare Menu", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
             else:
                 download = messagebox.askyesno("Executable Not Found", "Game not found in the selected path. Do you want to download it?")
                 if download:
@@ -814,7 +816,8 @@ class GameLauncher:
                 self.update_rpc("Playing", "Black Ops Cold War", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
                 self.wait_for_process_termination("BlackOpsColdWar.exe")
                 self.toggle_mute() 
-                self.resume_music() 
+                self.resume_music()
+                self.update_rpc("Just finished playing", "In the Black Ops Cold War Menu", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
                 self.update_mission_display()
             else:
                 download = messagebox.askyesno("Executable Not Found", "Game not found in the selected path. Do you want to download it?")
