@@ -20,7 +20,7 @@ Launcher made in Python designed to launch *special* versions of Black Ops Cold 
 - Download .cfgs
 
 # Credits
-Donetsk server: https://discord.gg/donetsk-1045458566636650568
+Donetsk server for the dlls used: https://discord.gg/donetsk-1045458566636650568
 
 # Contributing
 Pull requests are welcome
