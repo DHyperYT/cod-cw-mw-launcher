@@ -30,5 +30,5 @@ Pull requests are welcome
 - ~~Show current campaign mission for each save in the Cold War menu.~~ DONE
 - ~~Maybe add a screen that shows your default loadouts in MW?~~ DONE
 - ~~Modern Warfare Operator manager menu?~~ DONE
-- Redesign the sidebar
+- ~~Redesign the sidebar~~ DONE
 - ~~Default loadout editor within the launcher for Modern Warfare~~ DONE
