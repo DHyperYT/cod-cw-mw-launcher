@@ -473,7 +473,7 @@ class GameLauncher:
         self.root = root
         self.rpc = None
         self.root.title("Call of Duty Launcher")
-        self.root.geometry("850x600")
+        self.root.geometry("750x600")
         self.root.resizable(False, False)
 
         icon_path = resource_path('icon.ico')
@@ -486,42 +486,44 @@ class GameLauncher:
         self.overlay_frame = tk.Frame(root, bg="#000000", bd=5)
         self.overlay_frame.place(relwidth=1, relheight=1)
 
-        self.sidebar = tk.Frame(self.overlay_frame, width=300, bg="#333", height=600, relief="raised", borderwidth=2)
+        self.sidebar = tk.Frame(self.overlay_frame, width=300, bg="#000000", height=600, relief="raised", borderwidth=2)
         self.sidebar.pack(side="left", fill="y")
 
-        self.button_frame = tk.Frame(self.sidebar, bg="#333")
+        self.button_frame = tk.Frame(self.sidebar, bg="#000")
         self.button_frame.pack(pady=10)
+
+        self.mw_img = Image.open(resource_path("mw.png"))
+        self.mw_img = self.mw_img.resize((50, 50), Image.Resampling.LANCZOS)
+        self.mw_photo = ImageTk.PhotoImage(self.mw_img)
+        self.mw_button = tk.Button(self.button_frame, image=self.mw_photo, command=self.show_mw_launcher, bg="#000", bd=0)
+        self.mw_button.pack(pady=10)
+
+        self.cw_img = Image.open(resource_path("cw.png"))
+        self.cw_img = self.cw_img.resize((50, 50), Image.Resampling.LANCZOS)
+        self.cw_photo = ImageTk.PhotoImage(self.cw_img)
+        self.cw_button = tk.Button(self.button_frame, image=self.cw_photo, command=self.show_cw_launcher, bg="#000", bd=0)
+        self.cw_button.pack(pady=10)
+
+        self.settings_img = Image.open(resource_path("settings.png"))
+        self.settings_img = self.settings_img.resize((50, 50), Image.Resampling.LANCZOS)
+        self.settings_photo = ImageTk.PhotoImage(self.settings_img)
+        self.settings_button = tk.Button(self.sidebar, image=self.settings_photo, command=self.open_settings, bg="#000", bd=0)
+        self.settings_button.pack(side="bottom", pady=10)
 
         self.mute_img = Image.open(resource_path("mute.png"))
         self.mute_img = self.mute_img.resize((50, 50), Image.Resampling.LANCZOS)
         self.mute_photo = ImageTk.PhotoImage(self.mute_img)
-        self.mute_button = tk.Button(self.button_frame, image=self.mute_photo, command=self.toggle_mute, bg="#333", bd=0)
-        self.mute_button.pack(side="left", padx=5)
+        self.mute_button = tk.Button(self.sidebar, image=self.mute_photo, command=self.toggle_mute, bg="#000", bd=0)
+        self.mute_button.pack(side="bottom", pady=10)
 
         self.git_img = Image.open(resource_path("git.png"))
-        self.git_img = self.git_img.resize((50, 50), Image.Resampling.LANCZOS)
+        self.git_img = self.git_img.resize((40, 40), Image.Resampling.LANCZOS)
         self.git_photo = ImageTk.PhotoImage(self.git_img)
-        self.git_button = tk.Button(self.button_frame, image=self.git_photo, command=self.open_github, bg="#333", bd=0)
-        self.git_button.pack(side="left", padx=5)
-
-        self.discord_img = Image.open(resource_path("discord.png"))
-        self.discord_img = self.discord_img.resize((50, 50), Image.Resampling.LANCZOS)
-        self.discord_photo = ImageTk.PhotoImage(self.discord_img)
-        self.discord_button = tk.Button(self.button_frame, image=self.discord_photo, command=self.open_discord, bg="#333", bd=0)
-        self.discord_button.pack(side="left", padx=5)
-
-        self.settings_button = tk.Button(self.sidebar, text="Settings", command=self.open_settings, bg="#000", fg="white", font=("Impact", 16), height=2)
-        self.settings_button.pack(side="bottom", fill="x", pady=10)
-
-        self.mw_button = tk.Button(self.sidebar, text="   Modern Warfare   ", command=self.show_mw_launcher, bg="#000", fg="white", font=("Impact", 16), height=2)
-        self.mw_button.pack(pady=10)
-
-        self.cw_button = tk.Button(self.sidebar, text="Black Ops Cold War", command=self.show_cw_launcher, bg="#000", fg="white", font=("Impact", 16), height=2)
-        self.cw_button.pack(pady=10)
+        self.git_button = tk.Button(self.sidebar, image=self.git_photo, command=self.open_github, bg="#000", bd=0)
+        self.git_button.pack(side="bottom", pady=10)
 
         self.main_frame = tk.Frame(self.overlay_frame, width=700, height=600, bg="#000000")
         self.main_frame.pack(side="right", fill="both", expand=True)
-
         self.video_label = tk.Label(self.main_frame)
         self.video_label.place(x=0, y=0, relwidth=1, relheight=1)
 
@@ -594,7 +596,7 @@ class GameLauncher:
         if self.launch_button:
             self.launch_button.destroy()
 
-        self.launch_button = tk.Button(self.main_frame, text="Launch", command=self.launch_mw_game, bg="#4b5320", fg="white", font=("Verdana", 20))
+        self.launch_button = tk.Button(self.main_frame, text="LAUNCH", command=self.launch_mw_game, bg="#000", fg="white", font=("Impact", 20))
         self.launch_button.pack(pady=250)
 
         if self.dll_button:
@@ -637,7 +639,7 @@ class GameLauncher:
         if self.launch_button:
             self.launch_button.destroy()
 
-        self.launch_button = tk.Button(self.main_frame, text="Launch", command=self.launch_cw_game, bg="#4b5320", fg="white", font=("Verdana", 20))
+        self.launch_button = tk.Button(self.main_frame, text="LAUNCH", command=self.launch_cw_game, bg="#000", fg="white", font=("Impact", 20))
         self.launch_button.pack(pady=250)
 
         if self.dll_button:
@@ -868,9 +870,6 @@ class GameLauncher:
 
     def open_github(self):
         webbrowser.open("https://github.com/DHyperYT/cod-cw-mw-launcher/")
-
-    def open_discord(self):
-        webbrowser.open("https://discord.gg/CCZhqg6RfX")
 
     def delete_inventory_file(self):
         file_path = os.path.join(os.getenv('USERPROFILE'), 'Documents', 'Call of Duty Modern Warfare', 'players', 'inventory.json')
