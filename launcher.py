@@ -15,6 +15,7 @@ import pypresence
 from tkinter import StringVar, OptionMenu, Button, Label
 from tkinter import ttk
 import re
+import requests
 
 def resource_path(relative_path):
     try:
@@ -43,6 +44,8 @@ class LoadoutEditor:
         "PP19Bizon": "iw8_sm_beta",
         "MP7": "iw8_sm_mpapa7",
         "Striker45": "iw8_sm_smgolf45",
+        "Vector (UNRELEASED)": "iw8_sm_victor",
+        "ISO (UNRELEASED)": "iw8_sm_charlie9",
         "Model680": "iw8_sh_romeo870",
         "R9-0": "iw8_sh_dpapa12",
         "725": "iw8_sh_charlie725",
@@ -54,9 +57,10 @@ class LoadoutEditor:
         "MG34": "iw8_lm_mgolf34",
         "Holger-26 (MG36)": "iw8_lm_mgolf36",
         "BruenMk9 (M249)": "iw8_lm_mkilo3",
-        "EBR-14 (M14)": "iw8_sn_mike14",
+        "EBR-14 (M14)": "iw8_sn_golf28",
         "MK2Carbine": "iw8_sn_sbeta",
         "Kar98K": "iw8_sn_kilo98",
+        "Bugged EBR-14": "iw8_sn_mike14",
         "Crossbow": "iw8_sn_crossbow",
         "SKS": "iw8_sn_sksierra",
         "Dragunov": "iw8_sn_delta",
@@ -617,6 +621,10 @@ class GameLauncher:
             self.download_button = tk.Button(self.main_frame, text="Download .cfg Files", command=self.download_config_files, bg="#000", fg="white", font=("Arial", 12))
             self.download_button.place(relx=0.0, rely=1.0, anchor="sw", x=20, y=-140)
 
+        if not hasattr(self, 'gsc_button') or not self.download_button.winfo_ismapped():
+            self.gsc_button = tk.Button(self.main_frame, text="Add unreleased gun support", command=self.download_gscbin, bg="#000", fg="white", font=("Arial", 12))
+            self.gsc_button.place(relx=0.0, rely=1.0, anchor="sw", x=20, y=-180)
+
         if not hasattr(self, 'delete_button') or not self.delete_button.winfo_ismapped():
             self.delete_button = tk.Button(self.main_frame, text="Load editor changes (DELETES YOUR SAVED DATA)", command=self.delete_inventory_file, bg="#000", fg="white", font=("Arial", 12))
             self.delete_button.place(relx=0.0, rely=1.0, anchor="sw", x=20, y=-20)
@@ -656,6 +664,8 @@ class GameLauncher:
             self.download_button.place_forget()
         if hasattr(self, 'delete_button'):
             self.delete_button.place_forget()
+        if hasattr(self, 'gsc_button'):
+            self.gsc_button.place_forget()
 
         self.update_mission_display()
         self.show_mission_labels()
@@ -922,6 +932,35 @@ class GameLauncher:
         
         messagebox.showinfo("Download Complete", "Downloaded autoexec.cfg, loadouts.cfg and operators.cfg files successfully. If you already had them they've been replaced.")
 
+    def download_gscbin(self):
+        local_appdata = os.getenv('LOCALAPPDATA')
+        game_path_file = os.path.join(local_appdata, 'temp', 'cod_mw_path.txt')
+        
+        try:
+            with open(game_path_file, 'r') as file:
+                game_path = file.read().strip()
+        except FileNotFoundError:
+            messagebox.showinfo("Failed to find the game's path", f"Please select the Modern Warfare path by clicking on settings.")
+            return
+
+        target_directory = os.path.join(game_path, 'donetsk', 'scripts')
+        if not os.path.exists(target_directory):
+            os.makedirs(target_directory)
+
+        file_url = 'https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/1922.gscbin'
+        target_file_path = os.path.join(target_directory, '1922.gscbin')
+
+        try:
+            response = requests.get(file_url)
+            response.raise_for_status() 
+            
+            with open(target_file_path, 'wb') as file:
+                file.write(response.content)
+
+            messagebox.showinfo("Download Finished", f"Successfully added unreleased gun support to your game.")
+        except requests.exceptions.RequestException:
+            messagebox.showerror("Download Error", f"Failed to download the gsc.")
+            
 if __name__ == "__main__":
     root = tk.Tk()
     app = GameLauncher(root)
