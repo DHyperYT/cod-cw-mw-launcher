@@ -508,6 +508,12 @@ class GameLauncher:
         self.cw_button = tk.Button(self.button_frame, image=self.cw_photo, command=self.show_cw_launcher, bg="#000", bd=0)
         self.cw_button.pack(pady=10)
 
+        self.wz_img = Image.open(resource_path("wz.png"))
+        self.wz_img = self.wz_img.resize((55, 55), Image.Resampling.LANCZOS)
+        self.wz_photo = ImageTk.PhotoImage(self.wz_img)
+        self.wz_button = tk.Button(self.button_frame, image=self.wz_photo, command=self.show_wz_launcher, bg="#000", bd=0)
+        self.wz_button.pack(pady=10)
+        
         self.settings_img = Image.open(resource_path("settings.png"))
         self.settings_img = self.settings_img.resize((50, 50), Image.Resampling.LANCZOS)
         self.settings_photo = ImageTk.PhotoImage(self.settings_img)
@@ -533,9 +539,11 @@ class GameLauncher:
 
         self.mw_video_path = resource_path("mw.mp4")
         self.cw_video_path = resource_path("cw.mp4")
+        self.wz_video_path = resource_path("wz.mp4")
 
         self.mw_cap = None
         self.cw_cap = None
+        self.wz_cap = None
         self.current_launcher = None
         self.launch_button = None
         self.dll_button = None
@@ -593,6 +601,8 @@ class GameLauncher:
         self.current_launcher = 'mw'
         if self.cw_cap:
             self.cw_cap.release()
+        if self.wz_cap:
+            self.wz_cap.release()
 
         self.play_video(self.mw_video_path, 'mw')
         self.play_music(resource_path("mw.mp3"))
@@ -640,6 +650,9 @@ class GameLauncher:
         self.current_launcher = 'cw'
         if self.mw_cap:
             self.mw_cap.release()
+        if self.wz_cap:
+            self.wz_cap.release()
+        
 
         self.play_video(self.cw_video_path, 'cw')
         self.play_music(resource_path("cw.mp3"))
@@ -671,6 +684,41 @@ class GameLauncher:
         self.show_mission_labels()
 
         self.update_rpc("Idle", "In the Black Ops Cold War Menu", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
+
+    def show_wz_launcher(self):
+        if self.current_launcher == 'wz':
+            return
+
+        self.current_launcher = 'wz'
+
+        if hasattr(self, 'mw_cap') and self.mw_cap:
+            self.mw_cap.release()
+        if hasattr(self, 'cw_cap') and self.cw_cap:
+            self.cw_cap.release()
+
+        if hasattr(self, 'wz_video_path') and self.wz_video_path:
+            self.play_video(self.wz_video_path, 'wz')
+            
+        self.play_music(resource_path("wz.mp3"))
+
+        if hasattr(self, 'launch_button'):
+            self.launch_button.destroy()
+
+        if hasattr(self, 'dll_button'):
+            self.dll_button.destroy()
+        if hasattr(self, 'editor_button'):
+            self.editor_button.place_forget()
+        if hasattr(self, 'weapon_button'):
+            self.weapon_button.place_forget()
+        if hasattr(self, 'download_button'):
+            self.download_button.place_forget()
+        if hasattr(self, 'delete_button'):
+            self.delete_button.place_forget()
+        if hasattr(self, 'gsc_button'):
+            self.gsc_button.place_forget()
+
+        self.hide_mission_labels()
+        self.update_rpc("Idle", "In [REDACTED]", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
 
     def hide_mission_labels(self):
         self.current_mission_label.place_forget()
@@ -714,6 +762,7 @@ class GameLauncher:
         self.save2_label.config(text=f"Save 2: {save2_mission}")
         self.save3_label.config(text=f"Save 3: {save3_mission}")
 
+
     def get_mission_from_save_file(self, save_file):
         save_directory = os.path.join(os.getenv('USERPROFILE'), 'Documents', 'Call Of Duty Black Ops Cold War', 'player')
         save_file_path = os.path.join(save_directory, save_file)
@@ -747,6 +796,9 @@ class GameLauncher:
         elif launcher_type == 'cw':
             self.cw_cap = cv2.VideoCapture(video_path)
             self.update_video(self.cw_cap)
+        elif launcher_type == 'wz':
+            self.wz_cap = cv2.VideoCapture(video_path)
+            self.update_video(self.wz_cap)
 
     def update_video(self, cap):
         if cap is not None:
@@ -911,7 +963,6 @@ class GameLauncher:
                 messagebox.showerror("Download Error", f"Failed to download {file_name}.")
         
         messagebox.showinfo("Download Complete", "Configuration files downloaded successfully.")
-
 
     def download_gscbin(self):
         local_appdata = os.getenv('LOCALAPPDATA')
