@@ -747,7 +747,7 @@ class GameLauncher:
                 img = ImageTk.PhotoImage(Image.fromarray(frame))
                 self.video_label.config(image=img)
                 self.video_label.image = img
-                self.root.after(15, lambda: self.update_video(cap))
+                self.root.after(10, lambda: self.update_video(cap))
             else:
                 cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
                 self.update_video(cap)
