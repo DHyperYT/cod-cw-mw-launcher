@@ -913,25 +913,6 @@ class GameLauncher:
         messagebox.showinfo("Download Complete", "Configuration files downloaded successfully.")
 
 
-    def download_config_files(self):
-        urls = {
-            "autoexec.cfg": "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/autoexec.cfg",
-            "loadouts.cfg": "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/loadouts.cfg",
-            "operators.cfg": "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/operators.cfg"
-        }
-        
-        save_directory = os.path.join(os.getenv('USERPROFILE'), 'Documents', 'Call of Duty Modern Warfare', 'players')
-        
-        os.makedirs(save_directory, exist_ok=True)
-        for file_name, url in urls.items():
-            file_path = os.path.join(save_directory, file_name)
-            try:
-                urllib.request.urlretrieve(url, file_path)
-            except Exception:
-                messagebox.showerror("Download Error", f"Failed to download {file_name}.")
-        
-        messagebox.showinfo("Download Complete", "Downloaded autoexec.cfg, loadouts.cfg and operators.cfg files successfully. If you already had them they've been replaced.")
-
     def download_gscbin(self):
         local_appdata = os.getenv('LOCALAPPDATA')
         game_path_file = os.path.join(local_appdata, 'temp', 'cod_mw_path.txt')
