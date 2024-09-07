@@ -473,7 +473,7 @@ class GameLauncher:
         self.root = root
         self.rpc = None
         self.root.title("Call of Duty Launcher")
-        self.root.geometry("750x600")
+        self.root.geometry("960x540")
         self.root.resizable(False, False)
 
         icon_path = resource_path('icon.ico')
@@ -669,10 +669,10 @@ class GameLauncher:
         self.save3_label.place_forget()
 
     def show_mission_labels(self):
-        self.current_mission_label.place(x=10, y=460)
-        self.save1_label.place(x=10, y=485)
-        self.save2_label.place(x=10, y=510)
-        self.save3_label.place(x=10, y=535)
+        self.current_mission_label.place(x=10, y=420)
+        self.save1_label.place(x=10, y=450)
+        self.save2_label.place(x=10, y=480)
+        self.save3_label.place(x=10, y=510)   
 
     def update_mission_display(self):
         self.mission_map = {
@@ -743,11 +743,11 @@ class GameLauncher:
             ret, frame = cap.read()
             if ret:
                 frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                frame = cv2.resize(frame, (700, 600))
+                frame = cv2.resize(frame, (960, 540))
                 img = ImageTk.PhotoImage(Image.fromarray(frame))
                 self.video_label.config(image=img)
                 self.video_label.image = img
-                self.root.after(10, lambda: self.update_video(cap))
+                self.root.after(15, lambda: self.update_video(cap))
             else:
                 cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
                 self.update_video(cap)
