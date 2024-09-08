@@ -582,7 +582,7 @@ class GameLauncher:
                 self.rpc.update(
                     state=state,
                     details=details,
-                    large_image="icon",
+                    large_image="icon1",
                     buttons=[{"label": button_label, "url": button_url}]
                 )
             except Exception as e:
@@ -856,7 +856,6 @@ class GameLauncher:
             exe_path = os.path.join(game_path, "game_dx12_ship_replay.exe")
             if os.path.exists(exe_path):
                 self.pause_music()
-                self.toggle_mute()
                 subprocess.Popen(exe_path, cwd=game_path)
                 self.update_rpc("Playing", "Modern Warfare", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
                 self.wait_for_process_termination("game_dx12_ship_replay.exe")
@@ -875,8 +874,7 @@ class GameLauncher:
         if game_path:
             exe_path = os.path.join(game_path, "BlackOpsColdWar.exe")
             if os.path.exists(exe_path):
-                self.pause_music() 
-                self.toggle_mute()  
+                self.pause_music()
                 subprocess.Popen(exe_path, cwd=game_path)
                 self.update_rpc("Playing", "Black Ops Cold War", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
                 self.wait_for_process_termination("BlackOpsColdWar.exe")
