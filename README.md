@@ -28,7 +28,7 @@ Pull requests are welcome
 
 # PLANS
 
-- Add support for unreleased guns in MW2019
+- ~~Add support for unreleased guns in MW2019~~
 - ~~Show current campaign mission for each save in the Cold War menu.~~ DONE
 - ~~Maybe add a screen that shows your default loadouts in MW?~~ DONE
 - ~~Modern Warfare Operator manager menu?~~ DONE
