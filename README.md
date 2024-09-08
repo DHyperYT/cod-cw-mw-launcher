@@ -37,4 +37,4 @@ Pull requests are welcome
 
 # BUGS
 
-- Music will continue playing if a game is launched while the Launcher music is muted. (workaround: Unmute the Launcher before launching the game)
+- ~~Music will continue playing if a game is launched while the Launcher music is muted. (workaround: Unmute the Launcher before launching the game)~~ FIXED
