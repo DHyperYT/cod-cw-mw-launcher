@@ -35,6 +35,6 @@ Pull requests are welcome
 - ~~Redesign the sidebar~~ DONE
 - ~~Default loadout editor within the launcher for Modern Warfare~~ DONE
 
-- # BUGS
+# BUGS
 
 - Music will continue playing if a game is launched while the Launcher music is muted. (workaround: Unmute the Launcher before launching the game)
