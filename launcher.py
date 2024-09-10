@@ -1083,7 +1083,6 @@ class GameLauncher:
         with open(path_file, 'r') as file:
             saved_path = file.readline().strip()
 
-        # URLs and filenames for the Greenluma files
         greenluma_files = {
             "DLLInjector.exe": "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/greenluma/DLLInjector.exe",
             "DLLInjector.ini": "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/greenluma/DLLInjector.ini",
@@ -1093,7 +1092,6 @@ class GameLauncher:
             "x64launcher.exe": "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/greenluma/bin/x64launcher.exe"
         }
 
-        # URLs and filenames for the AppList files
         applist_files = {
             "0.txt": "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/AppList/0.txt",
             "1.txt": "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/AppList/1.txt",
@@ -1104,7 +1102,6 @@ class GameLauncher:
 
         download_success = True
 
-        # Download Greenluma files
         for filename, url in greenluma_files.items():
             file_path = os.path.join(saved_path, filename)
             
