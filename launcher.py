@@ -998,7 +998,7 @@ class GameLauncher:
     def download_mw_dll(self):
         game_path = self.load_game_path()
         if game_path:
-            dll_url = "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/discord_game_sdk%20(1).dll"
+            dll_url = "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/dlls/discord_game_sdk%20(1).dll"
             dll_path = os.path.join(game_path, "discord_game_sdk.dll")
             urllib.request.urlretrieve(dll_url, dll_path)
             messagebox.showinfo("DLL Downloaded", "DLL installed successfully.")
@@ -1008,7 +1008,7 @@ class GameLauncher:
     def download_cw_dll(self):
         game_path = self.load_game_path()
         if game_path:
-            dll_url = "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/discord_game_sdk.dll"
+            dll_url = "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/dlls/discord_game_sdk.dll"
             dll_path = os.path.join(game_path, "discord_game_sdk.dll")
             urllib.request.urlretrieve(dll_url, dll_path)
             messagebox.showinfo("DLL Downloaded", "DLL installed successfully.")
@@ -1036,9 +1036,9 @@ class GameLauncher:
     
     def download_config_files(self):
         urls = {
-            "autoexec.cfg": "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/autoexec.cfg",
-            "loadouts.cfg": "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/loadouts.cfg",
-            "operators.cfg": "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/operators.cfg"
+            "autoexec.cfg": "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/scripts/autoexec.cfg",
+            "loadouts.cfg": "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/scripts/loadouts.cfg",
+            "operators.cfg": "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/scripts/operators.cfg"
         }
 
         save_directory = os.path.join(os.getenv('USERPROFILE'), 'Documents', 'Call of Duty Modern Warfare', 'players')
@@ -1068,7 +1068,7 @@ class GameLauncher:
         if not os.path.exists(target_directory):
             os.makedirs(target_directory)
 
-        file_url = 'https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/1922.gscbin'
+        file_url = 'https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/scripts/1922.gscbin'
         target_file_path = os.path.join(target_directory, '1922.gscbin')
 
         try:
@@ -1130,7 +1130,7 @@ class GameLauncher:
             
             except Exception:
                 download_success = False
-                
+
         app_list_folder = os.path.join(saved_path, "AppList")
         if not os.path.exists(app_list_folder):
             os.makedirs(app_list_folder)
@@ -1155,7 +1155,7 @@ class GameLauncher:
             messagebox.showerror("Greenluma", "Download Failed")
 
     def download_koala(self):
-        url = "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/KoalageddonInstaller.exe"
+        url = "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/koala/KoalageddonInstaller.exe"
         try:
             temp_dir = tempfile.gettempdir()
             file_path = os.path.join(temp_dir, "KoalageddonInstaller.exe")
