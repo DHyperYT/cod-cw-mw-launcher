@@ -942,6 +942,12 @@ class GameLauncher:
             messagebox.showerror("Error", "Game path not set. Please set the game path in Settings.")
 
     def launch_mw2_game(self):
+        for process in psutil.process_iter(['pid', 'name']):
+            if process.info['name'] == 'Steam.exe':
+                process.kill()
+                messagebox.showinfo("Steam", "Steam has been closed.")
+                break
+            
         game_path = self.load_game_path()
         if game_path:
             messagebox.showinfo("WARNING", "PLEASE BE AWARE THAT PROCEEDING WILL GET YOU SHADOWBANNED FROM WZ, MWII, MWIII, AND BO6 FOR A WEEK.")
@@ -951,8 +957,11 @@ class GameLauncher:
                 self.pause_music()
                 subprocess.Popen(exe_path, cwd=game_path)
                 self.update_rpc("Playing Campaign", "Modern Warfare II", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
+                self.wait_for_process_termination("DLLInjector.exe")
                 self.toggle_mute()
+                self.resume_music() 
                 self.update_rpc("Just finished playing", "In the Modern Warfare II Menu", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
+
             else:
                 download = messagebox.showinfo("Greenluma Not Found", "Greenluma not found in the selected path. Press Download Greenluma to download it.")
      
