@@ -6,11 +6,11 @@ Can also launch Modern Warfare II (10/9/2024)
 # Usage
 
 1. Click and select the directory where your game is installed.
-2. Choose between Modern Warfare or Black Ops Cold War and click 'Launch'.
+2. Choose between Modern Warfare, Modern Warfare II, or Black Ops Cold War and click 'Launch'.
 3. Use the 'Download DLL' buttons to install better discord_game_sdk.dll files to the games.
 
 # Features
-- Can launch Modern Warfare or Black Ops Cold War
+- Can launch Modern Warfare, Modern Warfare II or Black Ops Cold War
 - Prompt you to install them if you don't have them
 - Discord RPC
 - Cold War menu shows what mission each of your campaign saves is on
@@ -18,7 +18,7 @@ Can also launch Modern Warfare II (10/9/2024)
 - Plays the respective game's main theme in the background, and can be muted
 - Launcher freezes when you launch a game so it won't use cpu power until you finish playing
 - manage your default mw operators within the launcher (will only apply on first launch until you press delete user data is deleted or when you change the dll)
-- Manage your default loadouts (same thing as operator editor applies)
+- Manage your default mw loadouts (same thing as operator editor applies)
 - Download .cfgs
 
 # Credits
