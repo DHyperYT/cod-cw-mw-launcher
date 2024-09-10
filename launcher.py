@@ -508,11 +508,11 @@ class GameLauncher:
         self.cw_button = tk.Button(self.button_frame, image=self.cw_photo, command=self.show_cw_launcher, bg="#000", bd=0)
         self.cw_button.pack(pady=10)
 
-        self.wz_img = Image.open(resource_path("wz.png"))
-        self.wz_img = self.wz_img.resize((55, 55), Image.Resampling.LANCZOS)
-        self.wz_photo = ImageTk.PhotoImage(self.wz_img)
-        self.wz_button = tk.Button(self.button_frame, image=self.wz_photo, command=self.show_wz_launcher, bg="#000", bd=0)
-        self.wz_button.pack(pady=10)
+        self.mw2_img = Image.open(resource_path("mw2.png"))
+        self.mw2_img = self.mw2_img.resize((60, 60), Image.Resampling.LANCZOS)
+        self.mw2_photo = ImageTk.PhotoImage(self.mw2_img)
+        self.mw2_button = tk.Button(self.button_frame, image=self.mw2_photo, command=self.show_mw2_launcher, bg="#000", bd=0)
+        self.mw2_button.pack(pady=10)
         
         self.settings_img = Image.open(resource_path("settings.png"))
         self.settings_img = self.settings_img.resize((50, 50), Image.Resampling.LANCZOS)
@@ -539,11 +539,11 @@ class GameLauncher:
 
         self.mw_video_path = resource_path("mw.mp4")
         self.cw_video_path = resource_path("cw.mp4")
-        self.wz_video_path = resource_path("wz.mp4")
+        self.mw2_video_path = resource_path("mw2.mp4")
 
         self.mw_cap = None
         self.cw_cap = None
-        self.wz_cap = None
+        self.mw2_cap = None
         self.current_launcher = None
         self.launch_button = None
         self.dll_button = None
@@ -601,8 +601,8 @@ class GameLauncher:
         self.current_launcher = 'mw'
         if self.cw_cap:
             self.cw_cap.release()
-        if self.wz_cap:
-            self.wz_cap.release()
+        if self.mw2_cap:
+            self.mw2_cap.release()
 
         self.play_video(self.mw_video_path, 'mw')
         self.play_music(resource_path("mw.mp3"))
@@ -640,6 +640,13 @@ class GameLauncher:
             self.delete_button.place(relx=0.0, rely=1.0, anchor="sw", x=20, y=-20)
 
         self.hide_mission_labels()
+        if hasattr(self, 'koala_button'):
+            self.koala_button.place_forget()
+        if hasattr(self, 'greenluma_button'):
+            self.greenluma_button.place_forget()
+        if hasattr(self, 'guide_button'):
+            self.guide_button.place_forget()
+
 
         self.update_rpc("Idle", "In the Modern Warfare Menu", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
 
@@ -650,8 +657,8 @@ class GameLauncher:
         self.current_launcher = 'cw'
         if self.mw_cap:
             self.mw_cap.release()
-        if self.wz_cap:
-            self.wz_cap.release()
+        if self.mw2_cap:
+            self.mw2_cap.release()
         
 
         self.play_video(self.cw_video_path, 'cw')
@@ -679,33 +686,71 @@ class GameLauncher:
             self.delete_button.place_forget()
         if hasattr(self, 'gsc_button'):
             self.gsc_button.place_forget()
+        if hasattr(self, 'koala_button'):
+            self.koala_button.place_forget()
+        if hasattr(self, 'greenluma_button'):
+            self.greenluma_button.place_forget()
+        if hasattr(self, 'guide_button'):
+            self.guide_button.place_forget()
 
         self.update_mission_display()
         self.show_mission_labels()
 
         self.update_rpc("Idle", "In the Black Ops Cold War Menu", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
 
-    def show_wz_launcher(self):
-        if self.current_launcher == 'wz':
+    def on_enter(self, event):
+        event.widget.config(bg='#76d22d')
+
+    def on_leave(self, event):
+        event.widget.config(bg='#656a61')
+        
+    def show_mw2_launcher(self):
+        if self.current_launcher == 'mw2':
             return
 
-        self.current_launcher = 'wz'
+        self.current_launcher = 'mw2'
 
         if hasattr(self, 'mw_cap') and self.mw_cap:
             self.mw_cap.release()
         if hasattr(self, 'cw_cap') and self.cw_cap:
             self.cw_cap.release()
 
-        if hasattr(self, 'wz_video_path') and self.wz_video_path:
-            self.play_video(self.wz_video_path, 'wz')
+        if hasattr(self, 'mw2_video_path') and self.mw2_video_path:
+            self.play_video(self.mw2_video_path, 'mw2')
             
-        self.play_music(resource_path("wz.mp3"))
+        self.play_music(resource_path("mw2.mp3"))
 
-        if hasattr(self, 'launch_button'):
+        if self.launch_button:
             self.launch_button.destroy()
+
+        self.launch_button = tk.Button(self.main_frame, text="LAUNCH MWII CAMPAIGN", command=self.launch_mw2_game, bg="#656a61", fg="white", font=("Impact", 20))
+        self.launch_button.place(x=300, y=380)
+        self.launch_button.bind("<Enter>", self.on_enter)
+        self.launch_button.bind("<Leave>", self.on_leave)
 
         if hasattr(self, 'dll_button'):
             self.dll_button.destroy()
+
+        self.dll_button = tk.Button(self.main_frame, text="DOWNLOAD MWII CAMPAIGN", command=self.download_mw2c, bg="#656a61", fg="white", font=("Arial", 12))
+        self.dll_button.place(relx=1.0, rely=1.0, anchor="se", x=-20, y=-20)
+        self.dll_button.bind("<Enter>", self.on_enter)
+        self.dll_button.bind("<Leave>", self.on_leave)
+
+        self.greenluma_button = tk.Button(self.main_frame, text="Download Greenluma", command=self.download_greenluma, bg="#656a61", fg="white", font=("Arial", 12))
+        self.greenluma_button.place(relx=0.5, rely=1.0, anchor="s", x=0, y=-20)
+        self.greenluma_button.bind("<Enter>", self.on_enter)
+        self.greenluma_button.bind("<Leave>", self.on_leave)
+
+        self.koala_button = tk.Button(self.main_frame, text="Install Koalageddon", command=self.download_koala, bg="#656a61", fg="white", font=("Arial", 12))
+        self.koala_button.place(relx=0.0, rely=1.0, anchor="sw", x=20, y=-20)
+        self.koala_button.bind("<Enter>", self.on_enter)
+        self.koala_button.bind("<Leave>",self. on_leave)
+
+        self.guide_button = tk.Button(self.main_frame, text="INSTALL GUIDE", command=self.show_guide, bg="#656a61", fg="white", font=("Arial", 14))
+        self.guide_button.place(relx=0.0, rely=0.0, anchor="nw", x=20, y=2)
+        self.guide_button.bind("<Enter>", self.on_enter)
+        self.guide_button.bind("<Leave>", self.on_leave)
+        
         if hasattr(self, 'editor_button'):
             self.editor_button.place_forget()
         if hasattr(self, 'weapon_button'):
@@ -718,7 +763,7 @@ class GameLauncher:
             self.gsc_button.place_forget()
 
         self.hide_mission_labels()
-        self.update_rpc("Idle", "In [REDACTED]", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
+        self.update_rpc("Idle", "In the Modern Warfare II Menu", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
 
     def hide_mission_labels(self):
         self.current_mission_label.place_forget()
@@ -796,9 +841,9 @@ class GameLauncher:
         elif launcher_type == 'cw':
             self.cw_cap = cv2.VideoCapture(video_path)
             self.update_video(self.cw_cap)
-        elif launcher_type == 'wz':
-            self.wz_cap = cv2.VideoCapture(video_path)
-            self.update_video(self.wz_cap)
+        elif launcher_type == 'mw2':
+            self.mw2_cap = cv2.VideoCapture(video_path)
+            self.update_video(self.mw2_cap)
 
     def update_video(self, cap):
         if cap is not None:
@@ -829,7 +874,7 @@ class GameLauncher:
             file.write(path)
 
     def open_settings(self):
-        new_path = filedialog.askdirectory(title="Select Game Folder")
+        new_path = filedialog.askdirectory(title="Select Game Folder (Choose Steam folder for MW2)")
         if new_path:
             if self.current_launcher == 'mw':
                 exe_path = os.path.join(new_path, "game_dx12_ship_replay.exe")
@@ -849,6 +894,13 @@ class GameLauncher:
                     download = messagebox.askyesno("Executable Not Found", "Game not found in the selected path. Do you want to download it?")
                     if download:
                         webbrowser.open("https://gofile.io/d/s9r66f")
+            elif self.current_launcher == 'mw2':
+                exe_path = os.path.join(new_path, "Steam.exe")
+                if os.path.exists(exe_path):
+                    self.save_game_path(new_path)
+                    messagebox.showinfo("Path Saved", "Steam path has been saved.")
+                else:
+                    download = messagebox.showinfo("Steam Not Found", "Steam not found in the selected path. Please download Steam.")
 
     def launch_mw_game(self):
         game_path = self.load_game_path()
@@ -888,7 +940,22 @@ class GameLauncher:
                     webbrowser.open("https://gofile.io/d/s9r66f")
         else:
             messagebox.showerror("Error", "Game path not set. Please set the game path in Settings.")
-            
+
+    def launch_mw2_game(self):
+        game_path = self.load_game_path()
+        if game_path:
+            messagebox.showinfo("WARNING", "PLEASE BE AWARE THAT PROCEEDING WILL GET YOU SHADOWBANNED FROM WZ, MWII, MWIII, AND BO6 FOR A WEEK.")
+            messagebox.showinfo("READ", "Press Yes in the next window and open the game from Library. If it stops working download Greenluma again.")
+            exe_path = os.path.join(game_path, "DllInjector.exe")
+            if os.path.exists(exe_path):
+                self.pause_music()
+                subprocess.Popen(exe_path, cwd=game_path)
+                self.update_rpc("Playing Campaign", "Modern Warfare II", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
+                self.toggle_mute()
+                self.update_rpc("Just finished playing", "In the Modern Warfare II Menu", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
+            else:
+                download = messagebox.showinfo("Greenluma Not Found", "Greenluma not found in the selected path. Press Download Greenluma to download it.")
+     
     def toggle_mute(self):
         if self.muted:
             pygame.mixer.music.unpause()
@@ -908,6 +975,17 @@ class GameLauncher:
         if not self.muted:
             pygame.mixer.music.unpause()
 
+    def show_guide(self):
+        messagebox.showinfo("Install Guide", 
+            "1. Press the settings icon and choose your Steam path.\n"
+            "2. Download and install COD HQ from Steam (WARZONE NOT NEEDED).\n"
+            "3. Install MWII Campaign and extract the rar at the root folder of COD HQ.\n"
+            "4. (Its a good idea to add an exclusion to your Steam folder in your antivirus before this) Press Download Greenluma.\n"
+            "5. Press Install Koalageddon and finish the setup.\n"
+            "6. Run Koalageddon and select Steam -> Install platform integrations.\n"
+            "7. Come back to this launcher and press Launch."
+        )
+        
     def download_mw_dll(self):
         game_path = self.load_game_path()
         if game_path:
@@ -927,6 +1005,10 @@ class GameLauncher:
             messagebox.showinfo("DLL Downloaded", "DLL installed successfully.")
         else:
             messagebox.showerror("Error", "Game path not set. Please set the game path in Settings.")
+
+    def download_mw2c(self):
+        messagebox.showinfo("READ THIS", "First install COD HQ from Steam and then move sp22 to its root folder.")
+        webbrowser.open("https://qiwi.gg/file/hfqJ6031-sp22GameDrive")
 
     def open_github(self):
         webbrowser.open("https://github.com/DHyperYT/cod-cw-mw-launcher/")
@@ -990,7 +1072,106 @@ class GameLauncher:
             messagebox.showinfo("Download Finished", f"Successfully added unreleased gun support to your game.")
         except requests.exceptions.RequestException:
             messagebox.showerror("Download Error", f"Failed to download the gsc.")
+
+    def download_greenluma(self):
+        path_file = os.path.expandvars(r"%localappdata%\Temp\cod_mw2_path.txt")
+
+        if not os.path.exists(path_file):
+            messagebox.showerror("Error", f"Path file not found: {path_file}")
+            return
+
+        with open(path_file, 'r') as file:
+            saved_path = file.readline().strip()
+
+        # URLs and filenames for the Greenluma files
+        greenluma_files = {
+            "DLLInjector.exe": "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/greenluma/DLLInjector.exe",
+            "DLLInjector.ini": "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/greenluma/DLLInjector.ini",
+            "GreenLumaSettings_2024.exe": "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/greenluma/GreenLumaSettings_2024.exe",
+            "GreenLuma_2024_x64.dll": "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/greenluma/GreenLuma_2024_x64.dll",
+            "GreenLuma_2024_x86.dll": "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/greenluma/GreenLuma_2024_x86.dll",
+            "x64launcher.exe": "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/greenluma/bin/x64launcher.exe"
+        }
+
+        # URLs and filenames for the AppList files
+        applist_files = {
+            "0.txt": "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/AppList/0.txt",
+            "1.txt": "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/AppList/1.txt",
+            "2.txt": "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/AppList/2.txt",
+            "3.txt": "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/AppList/3.txt",
+            "4.txt": "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/AppList/4.txt"
+        }
+
+        download_success = True
+
+        # Download Greenluma files
+        for filename, url in greenluma_files.items():
+            file_path = os.path.join(saved_path, filename)
             
+            if filename == "x64launcher.exe":
+                bin_folder = os.path.join(saved_path, "bin")
+                if not os.path.exists(bin_folder):
+                    os.makedirs(bin_folder)
+                file_path = os.path.join(bin_folder, filename)
+            
+            try:
+                response = requests.get(url, stream=True)
+                response.raise_for_status()
+                
+                with open(file_path, 'wb') as file:
+                    for chunk in response.iter_content(chunk_size=8192):
+                        file.write(chunk)
+            
+            except Exception:
+                download_success = False
+
+        # Download AppList files
+        app_list_folder = os.path.join(saved_path, "AppList")
+        if not os.path.exists(app_list_folder):
+            os.makedirs(app_list_folder)
+
+        for filename, url in applist_files.items():
+            file_path = os.path.join(app_list_folder, filename)
+            
+            try:
+                response = requests.get(url, stream=True)
+                response.raise_for_status()
+                
+                with open(file_path, 'wb') as file:
+                    for chunk in response.iter_content(chunk_size=8192):
+                        file.write(chunk)
+            
+            except Exception:
+                download_success = False
+
+        # Show result message
+        if download_success:
+            messagebox.showinfo("Greenluma", "Download Completed")
+        else:
+            messagebox.showerror("Greenluma", "Download Failed")
+
+    def download_koala(self):
+        url = "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/KoalageddonInstaller.exe"
+        try:
+            temp_dir = tempfile.gettempdir()
+            file_path = os.path.join(temp_dir, "KoalageddonInstaller.exe")
+
+            response = requests.get(url, stream=True)
+            response.raise_for_status()
+            
+            with open(file_path, "wb") as file:
+                for chunk in response.iter_content(chunk_size=8192):
+                    file.write(chunk)
+
+            subprocess.Popen(file_path, shell=True)
+            messagebox.showinfo("Download Complete", "Koalageddon Installer has been downloaded.")
+
+        except requests.RequestException as e:
+            messagebox.showerror("Download Error", f"Failed to download the file: {e}")
+
+        except Exception as e:
+            messagebox.showerror("Error", f"An error occurred: {e}")
+
 if __name__ == "__main__":
     root = tk.Tk()
     app = GameLauncher(root)
