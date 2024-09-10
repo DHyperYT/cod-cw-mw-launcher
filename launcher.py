@@ -987,7 +987,7 @@ class GameLauncher:
     def show_guide(self):
         messagebox.showinfo("Install Guide", 
             "1. Press the settings icon and choose your Steam path.\n"
-            "2. Download and install COD HQ from Steam (WARZONE NOT NEEDED).\n"
+            "2. Download and install COD HQ from Steam (WARZONE NOT NEEDED), then run it once.\n"
             "3. Install MWII Campaign and extract the rar at the root folder of COD HQ.\n"
             "4. (Its a good idea to add an exclusion to your Steam folder in your antivirus before this) Press Download Greenluma.\n"
             "5. Press Install Koalageddon and finish the setup.\n"
