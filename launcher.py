@@ -1130,8 +1130,7 @@ class GameLauncher:
             
             except Exception:
                 download_success = False
-
-        # Download AppList files
+                
         app_list_folder = os.path.join(saved_path, "AppList")
         if not os.path.exists(app_list_folder):
             os.makedirs(app_list_folder)
@@ -1150,7 +1149,6 @@ class GameLauncher:
             except Exception:
                 download_success = False
 
-        # Show result message
         if download_success:
             messagebox.showinfo("Greenluma", "Download Completed")
         else:
