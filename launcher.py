@@ -577,12 +577,13 @@ class GameLauncher:
             self.rpc = None
 
     def update_rpc(self, state, details, button_label, button_url):
+        icon = self.current_launcher
         if self.rpc:
             try:
                 self.rpc.update(
                     state=state,
                     details=details,
-                    large_image="icon1",
+                    large_image=icon,
                     buttons=[{"label": button_label, "url": button_url}]
                 )
             except Exception as e:
