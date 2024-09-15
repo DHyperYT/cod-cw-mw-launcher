@@ -22,7 +22,8 @@ Can also launch Modern Warfare II (10/9/2024)
 - Download .cfgs
 
 # Credits
-Donetsk server for the dlls used: https://discord.gg/donetsk-1045458566636650568
+Donetsk server for the dlls used: https://discord.gg/donetsk-1045458566636650568, https://github.com/ProjectDonetsk/Donetsk
+
 Mron for the unreleased gun support gsc: https://discord.gg/mronwarzone
 
 # Contributing
