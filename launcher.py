@@ -870,16 +870,23 @@ class GameLauncher:
                 self.update_video(cap)
 
     def load_game_path(self):
-        temp_dir = tempfile.gettempdir()
-        path_file = os.path.join(temp_dir, f"cod_{self.current_launcher}_path.txt")
+        user_documents = os.path.expandvars('%USERPROFILE%')
+        cod_launcher_dir = os.path.join(user_documents, 'Documents', 'COD Launcher')
+        path_file = os.path.join(cod_launcher_dir, f"cod_{self.current_launcher}_path.txt")
+        
         if os.path.exists(path_file):
             with open(path_file, 'r') as file:
                 return file.read().strip()
         return ""
 
     def save_game_path(self, path):
-        temp_dir = tempfile.gettempdir()
-        path_file = os.path.join(temp_dir, f"cod_{self.current_launcher}_path.txt")
+        user_documents = os.path.expandvars('%USERPROFILE%')
+        cod_launcher_dir = os.path.join(user_documents, 'Documents', 'COD Launcher')
+
+        os.makedirs(cod_launcher_dir, exist_ok=True)
+        
+        path_file = os.path.join(cod_launcher_dir, f"cod_{self.current_launcher}_path.txt")
+        
         with open(path_file, 'w') as file:
             file.write(path)
 
@@ -1044,6 +1051,7 @@ class GameLauncher:
 
     def delete_inventory_file(self):
         file_path = os.path.join(os.getenv('USERPROFILE'), 'Documents', 'Call of Duty Modern Warfare', 'players', 'inventory.json')
+        file_path_OLD = os.path.join(os.getenv('USERPROFILE'), 'Documents', 'Call of Duty Modern Warfare', 'players', 'inventoryOLD.json')
         
         try:
             if os.path.exists(file_path):
@@ -1051,9 +1059,16 @@ class GameLauncher:
                 messagebox.showinfo("File Deleted", "inventory.json has been deleted.")
             else:
                 messagebox.showwarning("File Not Found", "inventory.json does not exist.")
-        except Exception:
-            messagebox.showerror("Deletion Error", f"Failed to delete inventory.json.")
-    
+            
+            if os.path.exists(file_path_OLD):
+                os.remove(file_path_OLD)
+                messagebox.showinfo("File Deleted", "inventoryOLD.json has been deleted.")
+            else:
+                messagebox.showwarning("File Not Found", "inventoryOLD.json does not exist.")
+                
+        except Exception as e:
+            messagebox.showerror("Deletion Error", f"Failed to delete files: {str(e)}")
+            
     def download_config_files(self):
         urls = {
             "autoexec.cfg": "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/scripts/autoexec.cfg",
