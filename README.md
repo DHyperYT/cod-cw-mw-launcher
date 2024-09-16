@@ -17,7 +17,7 @@ Can also launch Modern Warfare II (10/9/2024)
 - Download DLL buttons to install the best (in my opinion) discord_game_sdk.dll to your game files
 - Plays the respective game's main theme in the background, and can be muted
 - Launcher freezes when you launch a game so it won't use cpu power until you finish playing
-- manage your default mw operators within the launcher (will only apply on first launch until you press delete user data is deleted or when you change the dll)
+- manage your default mw operators within the launcher (will only apply on first launch or until you press delete user data or when you change the dll)
 - Manage your default mw loadouts (same thing as operator editor applies)
 - Download .cfgs
 
