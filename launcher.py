@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox
 import os
-import tempfile
 import cv2
 from PIL import Image, ImageTk
 import pygame
