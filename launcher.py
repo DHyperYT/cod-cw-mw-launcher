@@ -8,6 +8,7 @@ import subprocess
 import time
 import psutil
 import webbrowser
+import tempfile
 import urllib.request
 import sys
 import pypresence
