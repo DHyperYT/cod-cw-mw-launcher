@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox
 import os
+import tempfile
 import cv2
 from PIL import Image, ImageTk
 import pygame
@@ -8,7 +9,6 @@ import subprocess
 import time
 import psutil
 import webbrowser
-import tempfile
 import urllib.request
 import sys
 import pypresence
@@ -1089,8 +1089,8 @@ class GameLauncher:
         messagebox.showinfo("Download Complete", "Configuration files downloaded successfully.")
 
     def download_gscbin(self):
-        local_appdata = os.getenv('LOCALAPPDATA')
-        game_path_file = os.path.join(local_appdata, 'temp', 'cod_mw_path.txt')
+        user_profile = os.getenv('USERPROFILE')
+        game_path_file = os.path.join(user_profile, 'Documents', 'COD Launcher', 'cod_mw_path.txt')
         
         try:
             with open(game_path_file, 'r') as file:
@@ -1118,7 +1118,7 @@ class GameLauncher:
             messagebox.showerror("Download Error", f"Failed to download the gsc.")
 
     def download_greenluma(self):
-        path_file = os.path.expandvars(r"%localappdata%\Temp\cod_mw2_path.txt")
+        path_file = os.path.expandvars(r"%USERPROFILE%\Documents\COD Launcher\cod_mw2_path.txt")
 
         if not os.path.exists(path_file):
             messagebox.showerror("Error", f"Path file not found: {path_file}")
