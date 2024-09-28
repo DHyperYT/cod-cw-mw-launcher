@@ -605,6 +605,9 @@ class GameLauncher:
         if self.mw2_cap:
             self.mw2_cap.release()
 
+        if hasattr(self, 'olddll_button'):
+            self.olddll_button.place_forget()
+
         self.play_video(self.mw_video_path, 'mw')
         self.play_music(resource_path("mw.mp3"))
 
@@ -664,8 +667,10 @@ class GameLauncher:
             self.mw_cap.release()
         if self.mw2_cap:
             self.mw2_cap.release()
-        
 
+        if hasattr(self, 'olddll_button'):
+            self.olddll_button.place_forget()
+        
         self.play_video(self.cw_video_path, 'cw')
         self.play_music(resource_path("cw.mp3"))
 
@@ -678,7 +683,11 @@ class GameLauncher:
         if self.dll_button:
             self.dll_button.destroy()
 
-        self.dll_button = tk.Button(self.main_frame, text="Download DLL", command=self.download_cw_dll, bg="#FF4500", fg="white", font=("Arial", 12))
+        if not hasattr(self, 'olddll_button') or not self.olddll_button.winfo_ismapped():
+            self.olddll_button = tk.Button(self.main_frame, text="Download OLD DLL", command=self.download_old_cw_dll, bg="#FF4500", fg="white", font=("Arial", 12))
+            self.olddll_button.place(relx=1.0, rely=1.0, anchor="se", x=-20, y=-60)
+
+        self.dll_button = tk.Button(self.main_frame, text="Download Latest DLL", command=self.download_cw_dll, bg="#FF4500", fg="white", font=("Arial", 12))
         self.dll_button.place(relx=1.0, rely=1.0, anchor="se", x=-20, y=-20)
 
 
@@ -698,8 +707,6 @@ class GameLauncher:
             self.greenluma_button.place_forget()
         if hasattr(self, 'guide_button'):
             self.guide_button.place_forget()
-        if hasattr(self, 'olddll_button'):
-            self.olddll_button.place_forget()
 
         self.update_mission_display()
         self.show_mission_labels()
@@ -1011,6 +1018,18 @@ class GameLauncher:
             "6. Run Koalageddon and select Steam -> Install platform integrations.\n"
             "7. Come back to this launcher and press Launch."
         )
+
+    def download_old_cw_dll(self):
+        messagebox.showinfo("Notice", "This DLL does not have easter eggs for zombies and your name is Player1. Download latest dll again to revert.")
+        game_path = self.load_game_path()
+        if game_path:
+            dll_url = "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/refs/heads/main/dlls/old_cw_dll.dll"
+            dll_path = os.path.join(game_path, "discord_game_sdk.dll")
+            urllib.request.urlretrieve(dll_url, dll_path)
+            messagebox.showinfo("DLL Downloaded", "DLL installed successfully.")
+        else:
+            messagebox.showerror("Error", "Game path not set. Please set the game path in Settings.")
+
     def download_old_dll(self):
         messagebox.showinfo("Notice", "This DLL cannot save loadout perks and equipment and doesn't have discord rpc or watermark. It also doesn't support custom GSC (including the one for unreleased guns). It won't touch your saved data of the latest dll. Download latest dll again to revert.")
         game_path = self.load_game_path()
