@@ -37,7 +37,7 @@ Pull requests are welcome
 - ~~Modern Warfare Operator manager menu?~~ DONE
 - ~~Redesign the sidebar~~ DONE
 - ~~Default loadout editor within the launcher for Modern Warfare~~ DONE
-- Implement actual launcher settings
+- ~~Implement actual launcher settings~~ DONE
 
 # BUGS
 
