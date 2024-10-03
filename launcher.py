@@ -1043,7 +1043,7 @@ class GameLauncher:
 
     def download_old_cw_dll(self):
         messagebox.showinfo("Notice", "This DLL does not have easter eggs for zombies and your name is Player1. Download latest dll again to revert.")
-        game_path = self.load_game_path()
+        game_path = self.load_game_path('cw')
         if game_path:
             dll_url = "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/refs/heads/main/dlls/old_cw_dll.dll"
             dll_path = os.path.join(game_path, "discord_game_sdk.dll")
@@ -1054,7 +1054,7 @@ class GameLauncher:
 
     def download_old_dll(self):
         messagebox.showinfo("Notice", "This DLL cannot save loadout perks and equipment and doesn't have discord rpc or watermark. It also doesn't support custom GSC (including the one for unreleased guns). It won't touch your saved data of the latest dll. Download latest dll again to revert.")
-        game_path = self.load_game_path()
+        game_path = self.load_game_path('mw')
         if game_path:
             dll_url = "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/Other%20MW%20DLL/discord_game_sdk.dll"
             dll_path = os.path.join(game_path, "discord_game_sdk.dll")
@@ -1064,7 +1064,7 @@ class GameLauncher:
             messagebox.showerror("Error", "Game path not set. Please set the game path in Settings.")
 
     def download_mw_dll(self):
-        game_path = self.load_game_path()
+        game_path = self.load_game_path('mw')
         if game_path:
             dll_url = "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/dlls/discord_game_sdk%20(1).dll"
             dll_path = os.path.join(game_path, "discord_game_sdk.dll")
@@ -1074,7 +1074,7 @@ class GameLauncher:
             messagebox.showerror("Error", "Game path not set. Please set the game path in Settings.")
 
     def download_cw_dll(self):
-        game_path = self.load_game_path()
+        game_path = self.load_game_path('cw')
         if game_path:
             dll_url = "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/main/dlls/discord_game_sdk.dll"
             dll_path = os.path.join(game_path, "discord_game_sdk.dll")
