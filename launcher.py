@@ -12,7 +12,7 @@ import webbrowser
 import urllib.request
 import sys
 import pypresence
-from tkinter import StringVar, OptionMenu, Button, Label
+from tkinter import StringVar, OptionMenu, Button, Label, Toplevel, Entry
 from tkinter import ttk
 import re
 import requests
@@ -605,47 +605,17 @@ class GameLauncher:
         if self.mw2_cap:
             self.mw2_cap.release()
 
-        if hasattr(self, 'olddll_button'):
-            self.olddll_button.place_forget()
-
         self.play_video(self.mw_video_path, 'mw')
         self.play_music(resource_path("mw.mp3"))
-
-        if self.launch_button:
-            self.launch_button.destroy()
-
-        self.launch_button = tk.Button(self.main_frame, text="LAUNCH", command=self.launch_mw_game, bg="#000", fg="white", font=("Impact", 20))
-        self.launch_button.pack(pady=250)
 
         if self.dll_button:
             self.dll_button.destroy()
 
-        if not hasattr(self, 'olddll_button') or not self.olddll_button.winfo_ismapped():
-            self.olddll_button = tk.Button(self.main_frame, text="Download OLD DLL", command=self.download_old_dll, bg="#FF4500", fg="white", font=("Arial", 12))
-            self.olddll_button.place(relx=1.0, rely=1.0, anchor="se", x=-20, y=-60)
+        if self.launch_button:
+            self.launch_button.destroy()
 
-        self.dll_button = tk.Button(self.main_frame, text="Download Latest DLL", command=self.download_mw_dll, bg="#FF4500", fg="white", font=("Arial", 12))
-        self.dll_button.place(relx=1.0, rely=1.0, anchor="se", x=-20, y=-20)
-
-        if not hasattr(self, 'weapon_button') or not self.weapon_button.winfo_ismapped():
-            self.weapon_button = tk.Button(self.main_frame, text="Weapon Editor (autoexec.cfg with loadouts.cfg needed)", command=self.open_weapon_editor, bg="#000", fg="white", font=("Arial", 12))
-            self.weapon_button.place(relx=0.0, rely=1.0, anchor="sw", x=20, y=-60)
-
-        if not hasattr(self, 'editor_button') or not self.editor_button.winfo_ismapped():
-            self.editor_button = tk.Button(self.main_frame, text="Operator Editor (autoexec.cfg with operators.cfg needed)", command=self.open_loadout_editor, bg="#000", fg="white", font=("Arial", 12))
-            self.editor_button.place(relx=0.0, rely=1.0, anchor="sw", x=20, y=-100)
-
-        if not hasattr(self, 'download_button') or not self.download_button.winfo_ismapped():
-            self.download_button = tk.Button(self.main_frame, text="Download .cfg Files", command=self.download_config_files, bg="#000", fg="white", font=("Arial", 12))
-            self.download_button.place(relx=0.0, rely=1.0, anchor="sw", x=20, y=-140)
-
-        if not hasattr(self, 'gsc_button') or not self.download_button.winfo_ismapped():
-            self.gsc_button = tk.Button(self.main_frame, text="Add unreleased gun support", command=self.download_gscbin, bg="#000", fg="white", font=("Arial", 12))
-            self.gsc_button.place(relx=0.0, rely=1.0, anchor="sw", x=20, y=-180)
-
-        if not hasattr(self, 'delete_button') or not self.delete_button.winfo_ismapped():
-            self.delete_button = tk.Button(self.main_frame, text="Load editor changes (DELETES YOUR SAVED DATA)", command=self.delete_inventory_file, bg="#000", fg="white", font=("Arial", 12))
-            self.delete_button.place(relx=0.0, rely=1.0, anchor="sw", x=20, y=-20)
+        self.launch_button = tk.Button(self.main_frame, text="LAUNCH", command=self.launch_mw_game, bg="#000", fg="white", font=("Impact", 25), height=2, width=6)
+        self.launch_button.pack(pady=235)
 
         self.hide_mission_labels()
         if hasattr(self, 'koala_button'):
@@ -661,46 +631,26 @@ class GameLauncher:
     def show_cw_launcher(self):
         if self.current_launcher == 'cw':
             return
+        game_path = self.load_game_path('cw')
 
         self.current_launcher = 'cw'
         if self.mw_cap:
             self.mw_cap.release()
         if self.mw2_cap:
             self.mw2_cap.release()
-
-        if hasattr(self, 'olddll_button'):
-            self.olddll_button.place_forget()
         
         self.play_video(self.cw_video_path, 'cw')
         self.play_music(resource_path("cw.mp3"))
 
-        if self.launch_button:
-            self.launch_button.destroy()
-
-        self.launch_button = tk.Button(self.main_frame, text="LAUNCH", command=self.launch_cw_game, bg="#000", fg="white", font=("Impact", 20))
-        self.launch_button.pack(pady=250)
-
         if self.dll_button:
             self.dll_button.destroy()
 
-        if not hasattr(self, 'olddll_button') or not self.olddll_button.winfo_ismapped():
-            self.olddll_button = tk.Button(self.main_frame, text="Download OLD DLL", command=self.download_old_cw_dll, bg="#FF4500", fg="white", font=("Arial", 12))
-            self.olddll_button.place(relx=1.0, rely=1.0, anchor="se", x=-20, y=-60)
+        if self.launch_button:
+            self.launch_button.destroy()
 
-        self.dll_button = tk.Button(self.main_frame, text="Download Latest DLL", command=self.download_cw_dll, bg="#FF4500", fg="white", font=("Arial", 12))
-        self.dll_button.place(relx=1.0, rely=1.0, anchor="se", x=-20, y=-20)
+        self.launch_button = tk.Button(self.main_frame, text="LAUNCH", command=self.launch_cw_game, bg="#000", fg="white", font=("Impact", 25), height=2, width=6)
+        self.launch_button.pack(pady=235)
 
-
-        if hasattr(self, 'editor_button'):
-            self.editor_button.place_forget()
-        if hasattr(self, 'weapon_button'):
-            self.weapon_button.place_forget()
-        if hasattr(self, 'download_button'):
-            self.download_button.place_forget()
-        if hasattr(self, 'delete_button'):
-            self.delete_button.place_forget()
-        if hasattr(self, 'gsc_button'):
-            self.gsc_button.place_forget()
         if hasattr(self, 'koala_button'):
             self.koala_button.place_forget()
         if hasattr(self, 'greenluma_button'):
@@ -742,9 +692,6 @@ class GameLauncher:
         self.launch_button.place(x=300, y=380)
         self.launch_button.bind("<Enter>", self.on_enter)
         self.launch_button.bind("<Leave>", self.on_leave)
-
-        if hasattr(self, 'dll_button'):
-            self.dll_button.destroy()
 
         self.dll_button = tk.Button(self.main_frame, text="DOWNLOAD MWII CAMPAIGN", command=self.download_mw2c, bg="#656a61", fg="white", font=("Arial", 12))
         self.dll_button.place(relx=1.0, rely=1.0, anchor="se", x=-20, y=-20)
@@ -842,12 +789,10 @@ class GameLauncher:
             return "Error"
 
     def open_loadout_editor(self):
-        self.update_rpc("Editing Operators", "In the Modern Warfare Menu", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
         editor_window = tk.Toplevel(self.root)
         OperatorEditor(editor_window)
 
     def open_weapon_editor(self):
-        self.update_rpc("Editing Weapons", "In the Modern Warfare Menu", "GitHub", "https://github.com/DHyperYT/cod-cw-mw-launcher/")
         editor_window = tk.Toplevel(self.root)
         LoadoutEditor(editor_window)
 
@@ -876,58 +821,134 @@ class GameLauncher:
                 cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
                 self.update_video(cap)
 
-    def load_game_path(self):
+
+    def open_settings(self):
+        settings_window = Toplevel(self.root)
+        settings_window.title("Settings")
+        settings_window.attributes('-topmost', True)
+        
+        def disable_topmost(func, *args):
+            settings_window.attributes('-topmost', False)
+            result = func(*args)
+            settings_window.attributes('-topmost', True)
+            return result
+
+        mw_path = self.load_game_path('mw')
+        cw_path = self.load_game_path('cw')
+        mw2_path = self.load_game_path('mw2')
+        
+        mw_label = Label(settings_window, text="Modern Warfare Path:")
+        mw_label.grid(row=0, column=0, padx=10, pady=10)
+        mw_entry = Entry(settings_window, width=50)
+        mw_entry.grid(row=0, column=1, padx=10, pady=10)
+        mw_entry.insert(0, mw_path)
+        mw_button = Button(settings_window, text="Browse", command=lambda: disable_topmost(self.browse_folder, mw_entry))
+        mw_button.grid(row=0, column=2, padx=10, pady=10)
+
+        cw_label = Label(settings_window, text="Black Ops Cold War Path:")
+        cw_label.grid(row=1, column=0, padx=10, pady=10)
+        cw_entry = Entry(settings_window, width=50)
+        cw_entry.grid(row=1, column=1, padx=10, pady=10)
+        cw_entry.insert(0, cw_path)
+        cw_button = Button(settings_window, text="Browse", command=lambda: disable_topmost(self.browse_folder, cw_entry))
+        cw_button.grid(row=1, column=2, padx=10, pady=10)
+
+        mw2_label = Label(settings_window, text="Steam Path (for MW2):")
+        mw2_label.grid(row=2, column=0, padx=10, pady=10)
+        mw2_entry = Entry(settings_window, width=50)
+        mw2_entry.grid(row=2, column=1, padx=10, pady=10)
+        mw2_entry.insert(0, mw2_path)
+        mw2_button = Button(settings_window, text="Browse", command=lambda: disable_topmost(self.browse_folder, mw2_entry))
+        mw2_button.grid(row=2, column=2, padx=10, pady=10)
+
+        save_button = Button(settings_window, text="Save Paths", command=lambda: disable_topmost(self.save_paths, mw_entry.get(), cw_entry.get(), mw2_entry.get()))
+        save_button.grid(row=3, column=1, padx=10, pady=10)
+
+        mw_settings_button = Button(settings_window, text="Modern Warfare Options", command=lambda: self.open_mw_settings(settings_window))
+        mw_settings_button.grid(row=4, column=1, padx=10, pady=10)
+
+        cw_settings_button = Button(settings_window, text="Black Ops Cold War Options", command=lambda: self.open_cw_settings(settings_window))
+        cw_settings_button.grid(row=5, column=1, padx=20, pady=10)
+
+    def open_mw_settings(self, settings_window):
+        settings_window.destroy()
+        mw_settings_window = Toplevel(self.root)
+        mw_settings_window.title("Modern Warfare Options")
+
+        if not hasattr(self, 'olddll_button') or not self.olddll_button.winfo_ismapped():
+            self.olddll_button = tk.Button(mw_settings_window, text="Download OLD DLL", command=self.download_old_dll, bg="#FF4500", fg="white", font=("Arial", 12))
+            self.olddll_button.grid(row=0, column=0, padx=20, pady=10)
+
+        self.dll_button = tk.Button(mw_settings_window, text="Download Latest DLL", command=self.download_mw_dll, bg="#FF4500", fg="white", font=("Arial", 12))
+        self.dll_button.grid(row=1, column=0, padx=20, pady=10)
+
+        if not hasattr(self, 'weapon_button') or not self.weapon_button.winfo_ismapped():
+            self.weapon_button = tk.Button(mw_settings_window, text="Weapon Editor (autoexec.cfg with loadouts.cfg needed)", command=self.open_weapon_editor, bg="#000", fg="white", font=("Arial", 12))
+            self.weapon_button.grid(row=2, column=0, padx=20, pady=10)
+
+        if not hasattr(self, 'editor_button') or not self.editor_button.winfo_ismapped():
+            self.editor_button = tk.Button(mw_settings_window, text="Operator Editor (autoexec.cfg with operators.cfg needed)", command=self.open_loadout_editor, bg="#000", fg="white", font=("Arial", 12))
+            self.editor_button.grid(row=3, column=0, padx=20, pady=10)
+
+        if not hasattr(self, 'download_button') or not self.download_button.winfo_ismapped():
+            self.download_button = tk.Button(mw_settings_window, text="Download .cfg Files", command=self.download_config_files, bg="#000", fg="white", font=("Arial", 12))
+            self.download_button.grid(row=4, column=0, padx=20, pady=10)
+
+        if not hasattr(self, 'gsc_button') or not self.gsc_button.winfo_ismapped():
+            self.gsc_button = tk.Button(mw_settings_window, text="Add unreleased gun support", command=self.download_gscbin, bg="#000", fg="white", font=("Arial", 12))
+            self.gsc_button.grid(row=5, column=0, padx=20, pady=10)
+
+        if not hasattr(self, 'delete_button') or not self.delete_button.winfo_ismapped():
+            self.delete_button = tk.Button(mw_settings_window, text="Load editor changes (DELETES YOUR SAVED DATA)", command=self.delete_inventory_file, bg="#000", fg="white", font=("Arial", 12))
+            self.delete_button.grid(row=6, column=0, padx=20, pady=10)
+
+    def open_cw_settings(self, settings_window):
+        settings_window.destroy()
+        cw_settings_window = Toplevel(self.root)
+        cw_settings_window.title("Black Ops Cold War Options")
+        cw_settings_window.attributes('-topmost', True)
+
+        olddll_button = tk.Button(cw_settings_window, text="Download OLD DLL", command=self.download_old_cw_dll, bg="#FF4500", fg="white", font=("Arial", 12))
+        olddll_button.grid(row=0, column=0, padx=20, pady=10)
+
+        dll_button = tk.Button(cw_settings_window, text="Download Latest DLL", command=self.download_cw_dll, bg="#FF4500", fg="white", font=("Arial", 12))
+        dll_button.grid(row=1, column=0, padx=20, pady=10)
+
+    def browse_folder(self, entry):
+        new_path = filedialog.askdirectory(title="Select Game Folder")
+        if new_path:
+            entry.delete(0, 'end')
+            entry.insert(0, new_path)
+
+    def load_game_path(self, game):
         user_documents = os.path.expandvars('%USERPROFILE%')
         cod_launcher_dir = os.path.join(user_documents, 'Documents', 'COD Launcher')
-        path_file = os.path.join(cod_launcher_dir, f"cod_{self.current_launcher}_path.txt")
+        path_file = os.path.join(cod_launcher_dir, f"cod_{game}_path.txt")
         
         if os.path.exists(path_file):
             with open(path_file, 'r') as file:
                 return file.read().strip()
         return ""
 
-    def save_game_path(self, path):
+    def save_paths(self, mw_path, cw_path, mw2_path):
         user_documents = os.path.expandvars('%USERPROFILE%')
         cod_launcher_dir = os.path.join(user_documents, 'Documents', 'COD Launcher')
-
+        
         os.makedirs(cod_launcher_dir, exist_ok=True)
-        
-        path_file = os.path.join(cod_launcher_dir, f"cod_{self.current_launcher}_path.txt")
-        
-        with open(path_file, 'w') as file:
-            file.write(path)
 
-    def open_settings(self):
-        new_path = filedialog.askdirectory(title="Select Game Folder (Choose Steam folder for MW2)")
-        if new_path:
-            if self.current_launcher == 'mw':
-                exe_path = os.path.join(new_path, "game_dx12_ship_replay.exe")
-                if os.path.exists(exe_path):
-                    self.save_game_path(new_path)
-                    messagebox.showinfo("Path Saved", "Modern Warfare path has been saved.")
-                else:
-                    download = messagebox.askyesno("Executable Not Found", "Game not found in the selected path. Do you want to download it?")
-                    if download:
-                        webbrowser.open("https://gofile.io/d/r4XRqA")
-            elif self.current_launcher == 'cw':
-                exe_path = os.path.join(new_path, "BlackOpsColdWar.exe")
-                if os.path.exists(exe_path):
-                    self.save_game_path(new_path)
-                    messagebox.showinfo("Path Saved", "Black Ops Cold War path has been saved.")
-                else:
-                    download = messagebox.askyesno("Executable Not Found", "Game not found in the selected path. Do you want to download it?")
-                    if download:
-                        webbrowser.open("https://gofile.io/d/s9r66f")
-            elif self.current_launcher == 'mw2':
-                exe_path = os.path.join(new_path, "Steam.exe")
-                if os.path.exists(exe_path):
-                    self.save_game_path(new_path)
-                    messagebox.showinfo("Path Saved", "Steam path has been saved.")
-                else:
-                    download = messagebox.showinfo("Steam Not Found", "Steam not found in the selected path. Please download Steam.")
+        with open(os.path.join(cod_launcher_dir, "cod_mw_path.txt"), 'w') as f:
+            f.write(mw_path)
+
+        with open(os.path.join(cod_launcher_dir, "cod_cw_path.txt"), 'w') as f:
+            f.write(cw_path)
+
+        with open(os.path.join(cod_launcher_dir, "cod_mw2_path.txt"), 'w') as f:
+            f.write(mw2_path)
+
+        messagebox.showinfo("Paths Saved", "Game paths have been saved successfully!")
 
     def launch_mw_game(self):
-        game_path = self.load_game_path()
+        game_path = self.load_game_path('mw')
         if game_path:
             exe_path = os.path.join(game_path, "game_dx12_ship_replay.exe")
             if os.path.exists(exe_path):
@@ -945,8 +966,9 @@ class GameLauncher:
         else:
             messagebox.showerror("Error", "Game path not set. Please set the game path in Settings.")
 
+        
     def launch_cw_game(self):
-        game_path = self.load_game_path()
+        game_path = self.load_game_path('cw')
         if game_path:
             exe_path = os.path.join(game_path, "BlackOpsColdWar.exe")
             if os.path.exists(exe_path):
@@ -972,7 +994,7 @@ class GameLauncher:
                 messagebox.showinfo("Steam", "Steam has been closed.")
                 break
             
-        game_path = self.load_game_path()
+        game_path = self.load_game_path('mw2')
         if game_path:
             messagebox.showinfo("WARNING", "PLEASE BE AWARE THAT PROCEEDING WILL GET YOU SHADOWBANNED FROM WZ, MWII, MWIII, AND BO6 FOR A WEEK.")
             messagebox.showinfo("READ", "Press Yes in the next window and open the game from Library. If it stops working download Greenluma again.")
