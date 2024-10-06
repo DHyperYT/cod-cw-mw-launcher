@@ -1042,7 +1042,7 @@ class GameLauncher:
         )
 
     def download_old_cw_dll(self):
-        messagebox.showinfo("Notice", "This DLL does not have easter eggs for zombies and your name is Player1. Download latest dll again to revert.")
+        messagebox.showinfo("Notice", "Thhis DLL is a very early version of the cr@ck. BUGS and CRASHES are expected. Download latest dll again to revert.")
         game_path = self.load_game_path('cw')
         if game_path:
             dll_url = "https://github.com/DHyperYT/cod-cw-mw-launcher/raw/refs/heads/main/dlls/old_cw_dll.dll"
