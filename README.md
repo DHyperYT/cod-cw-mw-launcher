@@ -3,6 +3,10 @@ Launcher made in Python designed to launch *special* versions of Black Ops Cold 
 
 Can also launch Modern Warfare II (10/9/2024)
 
+# NOTICE IF YOU PLAY COLD WAR
+
+Due to a recent Windows update Cold War will fail to start. To fix this open the launcher as an administrator.
+
 # Usage
 
 1. Click and select the directory where your game is installed.
