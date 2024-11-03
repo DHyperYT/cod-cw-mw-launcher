@@ -10,6 +10,8 @@ Can also launch Modern Warfare II (10/9/2024)
 2. Choose between Modern Warfare, Modern Warfare II, or Black Ops Cold War and click 'Launch'.
 3. Use the 'Download DLL' buttons to install better discord_game_sdk.dll files to the games.
 
+# TO PLAY MWII, YOU NOW ALSO NEED TO ADD THE BO6 CAMPAIGN AND BO6 MULTIPLAYER PACK APP IDS TO YOUR KOALAGEDDON BLOCKLIST (NOT APP_BLOCKLIST)
+
 # Features
 - Can launch Modern Warfare, Modern Warfare II or Black Ops Cold War
 - Prompt you to install them if you don't have them
