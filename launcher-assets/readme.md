@@ -1,0 +1,1 @@
+Move the assets to the same path as the .py file. get mp4s yourself 
