@@ -1,3 +1,5 @@
+# TOO LAZY TO UPDATE LAUNCHER CODE FOR MWII, GET NEW DLLS FROM GREENLUMA FOLDER YOURSELF
+
 # Call of Duty Modern Warfare, Modern Warfare II and Black Ops Cold War Launcher
 Launcher made in Python designed to launch *special* versions of Black Ops Cold War and Modern Warfare.
 
