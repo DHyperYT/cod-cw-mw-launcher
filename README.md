@@ -1,3 +1,5 @@
+# UPDATING. DO NOT USE FOR MODERN WARFARE II FOR THE TIME BEING UNTIL THE NEW UPDATE IS RELEASED
+
 
 # Call of Duty Modern Warfare, Modern Warfare II and Black Ops Cold War Launcher
 Launcher made in Python designed to launch *special* versions of Black Ops Cold War and Modern Warfare.
