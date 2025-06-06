@@ -1,4 +1,4 @@
-# UPDATING. DO NOT USE FOR MODERN WARFARE II FOR THE TIME BEING UNTIL THE NEW UPDATE IS RELEASED
+# no longer being maintained as i've released a newer and simpler launcher which works much better than this
 
 
 # Call of Duty Modern Warfare, Modern Warfare II and Black Ops Cold War Launcher
